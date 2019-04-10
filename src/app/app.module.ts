@@ -23,6 +23,7 @@ import {
 } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { CompanyDetailsComponent } from './company-details/company-details.component';
+import { ProjectDetailsComponent } from './project-details/project-details.component';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { CompanyDetailsComponent } from './company-details/company-details.compo
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    ProjectDetailsComponent,
     // CompanyDetailsComponent,
 
   ],

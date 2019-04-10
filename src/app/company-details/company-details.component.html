@@ -1,15 +1,16 @@
-<div class="main-content container-company-details" >
+<mat-spinner *ngIf="isLoading" ></mat-spinner>
+<div class="main-content">
   <div class="container-fluid">
-      <div class="row">
-          <div class="col-md-8">
-              <div class="card">
-                  <div class="card-header card-header-danger">
-                      <h4 class="card-title">Company Profile</h4>
-                      <p class="card-category">Complete company details</p>
-                  </div>
-                  <div class="card-body">
-                      <form [formGroup]="companyDetails" (ngSubmit)="onSubmit()">
-                          <!-- <div class="row">
+    <div class="row">
+      <div class="col-md-10">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Company Profile</h4>
+            <p class="card-category">Complete company details</p>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="companyDetails" (ngSubmit)="onSubmit()">
+              <!-- <div class="row">
                               <div class="col-md-5">
                                 <mat-form-field class="example-full-width">
                                     <input matInput placeholder="Company (disabled)" disabled>
@@ -27,64 +28,108 @@
                               </div>
                           </div> -->
 
-                          <!-- <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+              <!-- <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
                             Please enter a valid email address
                           </mat-error>
                           <mat-error *ngIf="emailFormControl.hasError('required')">
                             Email is <strong>required</strong>
                           </mat-error> -->
-                      
 
 
-                          <div class="row">
-                              <div class="col-md-3">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Company name" formControlName="companyName" type="text">
-                                </mat-form-field>
-                              </div>
-                              <div class="col-md-3">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Contact number " formControlName="contact" type="text">
-                                </mat-form-field>
-                              </div>
-                              <div class="col-md-6">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Email address" formControlName="email" type="email">
-                                </mat-form-field>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-md-12">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Adress" type="text">
-                                </mat-form-field>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-md-4">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="City" type="text">
-                                </mat-form-field>
-                              </div>
-                              <div class="col-md-4">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Country" type="text">
-                                </mat-form-field>
-                              </div>
-                              <div class="col-md-4">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Postal Code" type="text">
-                                </mat-form-field>
-                              </div>
-                          </div>
-                        
-                          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save Details</button>
-                          <div class="clearfix"></div>
-                      </form>
-                  </div>
+
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Company name" formControlName="companyName" type="text">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Contact number " formControlName="contact" type="text">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Email address" formControlName="email" type="email">
+                    <mat-error
+                      *ngIf="companyDetails.controls['email'].hasError('email') && !companyDetails.controls['email'].hasError('required')">
+                      Please enter a valid email address
+                    </mat-error>
+                    <mat-error *ngIf="companyDetails.controls['email'].hasError('required')">
+                      Email is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
               </div>
+
+              <div formGroupName="address">
+                  <h3>Address</h3>
+                <!-- <div class="row">
+                  <div class="col-md-12">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Adress" type="text">
+                    </mat-form-field>
+                  </div>
+                </div> -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Street Adress" formControlName="street" type="text">
+                    </mat-form-field>
+                  </div>
+                  </div>
+                <div class="row">
+                  <div class="col-md-6">
+                      <mat-form-field>
+                          <mat-label>Country</mat-label>
+                          <mat-select  formControlName="country" >                  
+                            <mat-option *ngFor="let country of countries" [value]="country.id">
+                              {{country.name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                    <!-- <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Country" type="text">
+                    </mat-form-field> -->
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field>
+                      <mat-label>State</mat-label>
+                      <mat-select formControlName="state">
+                        <mat-option *ngFor="let state of states"  [value]="state.id">
+                          {{state.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  </div>
+                  <div class="row">
+
+                  <div class="col-md-6">
+                      <mat-form-field>
+                          <mat-label>City</mat-label>
+                          <mat-select formControlName="city">
+                            <mat-option *ngFor="let city of cities"  [value]="city.id">
+                              {{city.name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                  </div>
+
+                  <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Postal Code" formControlName="zip" >
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save Details</button>
+              <div class="clearfix"></div>
+            </form>
           </div>
-          <!-- <div class="col-md-4">
+        </div>
+      </div>
+      <!-- <div class="col-md-4">
               <div class="card card-profile">
                   <div class="card-avatar">
                       <a href="#pablo">
@@ -101,9 +146,9 @@
                   </div>
               </div>
           </div> -->
-      </div>
+    </div>
   </div>
 </div>
-<p>
-  Form Status: {{ companyDetails }}
-</p>
+<!-- <p>
+  Form Status: {{ countryCode }}
+</p> -->
