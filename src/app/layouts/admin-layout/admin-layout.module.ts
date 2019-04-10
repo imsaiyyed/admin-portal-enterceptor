@@ -12,6 +12,7 @@ import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { CompanyDetailsComponent } from '../../company-details/company-details.component';
+import { ProjectDetailsComponent } from '../../project-details/project-details.component';
 import {
   MatButtonModule,
   MatInputModule,
@@ -21,7 +22,9 @@ import {
   MatSelectModule,
   MatBadgeModule,
   MatIconModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatTableModule,
+  MatPaginatorModule
 } from '@angular/material';
 @NgModule({
   imports: [
@@ -37,7 +40,9 @@ import {
     ReactiveFormsModule,
     MatBadgeModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   declarations: [
     DashboardComponent,
@@ -48,7 +53,8 @@ import {
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
-    CompanyDetailsComponent
+    CompanyDetailsComponent,
+    ProjectDetailsComponent
   ]
 })
 

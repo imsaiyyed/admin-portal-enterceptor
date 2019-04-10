@@ -20,7 +20,10 @@ import { ValidateContactNumber } from "../validators/custom-validator";
 export class CompanyDetailsComponent implements OnInit {
   companyDetails = this.fb.group({
     companyName: ["", [Validators.required]],
-    contact: ["", [Validators.required, ValidateContactNumber,Validators.minLength(10)]],
+    contact: [
+      "",
+      [Validators.required, ValidateContactNumber, Validators.minLength(10)]
+    ],
     email: ["", [Validators.required, Validators.email]],
     address: this.fb.group({
       country: ["", [Validators.required]],
@@ -70,6 +73,13 @@ export class CompanyDetailsComponent implements OnInit {
             this.companyDetails.get("address").get("country").value ==
               x.country_id
         );
+        // if (this.cities.length <= 0) {
+        //   console.log(this.cities);
+        //   this.companyDetails
+        //     .get("address")
+        //     .get("city")
+        //     .reset("Ok");
+        // }
         // this.companyDetails.get('address').get('city').setValue(this.cities[0].id);
       });
   }

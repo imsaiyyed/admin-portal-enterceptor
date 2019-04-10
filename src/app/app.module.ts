@@ -40,7 +40,7 @@ import { ProjectDetailsComponent } from './project-details/project-details.compo
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    ProjectDetailsComponent,
+    // ProjectDetailsComponent,
     // CompanyDetailsComponent,
 
   ],
