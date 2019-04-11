@@ -1,0 +1,100 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-10">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Create Project</h4>
+            <p class="card-category">Complete your project details</p>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="projectDetails" (ngSubmit)="onSubmit()">
+              <div class="row  mb-4">
+                <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Project Title" formControlName="projectTitle" type="text">
+                  </mat-form-field>
+                  </div>
+                  <!-- <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                      <input  mat-stroked-button color="accent" formControlName="projectLogo" type="file"/>
+                    </mat-form-field>
+                </div> -->
+                <div class="col-md-4 ">
+                    <mat-label>Project Logo</mat-label>
+
+                <input  type="file" (change)="onFileChange($event)" />
+              </div>
+              </div>
+              <div class="row  mb-3">
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="startDatePicker" formControlName="startDate"
+                      placeholder="Start Date of project">
+                    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4 ">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="endDatePicker" formControlName="endDate"
+                      placeholder="End Date of project">
+                    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                  </mat-form-field>
+                  <!-- <mat-form-field class="example-full-width">
+                    <input matInput placeholder="End Date" formControlName="endDate" type="email"> -->
+                  <!-- <mat-error
+                                    *ngIf="companyDetails.controls['email'].hasError('email') && !companyDetails.controls['email'].hasError('required')">
+                                    Please enter a valid email address
+                                  </mat-error>
+                                  <mat-error *ngIf="companyDetails.controls['email'].hasError('required')">
+                                    Email is <strong>required</strong>
+                                  </mat-error> -->
+                  <!-- </mat-form-field> -->
+                </div>
+                <div class="col-md-4" >
+                    <mat-form-field>
+                        <mat-label>Project Status</mat-label>
+                        <mat-select formControlName="isActive">
+                          <mat-option [value]="true">
+                            Active
+                          </mat-option>
+                          <mat-option [value]="false">
+                              In-Active
+                            </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                  </div>
+              </div>
+              <div class="row mb-4">
+                  <div class="col-md-8">
+                    <mat-form-field class="example-chip-list">
+                      <mat-chip-list #chipList>
+                        <mat-chip *ngFor="let tag of tags" [selectable]="selectable" [removable]="removable"
+                          (removed)="remove(tag)">
+                          {{tag.name}}
+                          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
+                        <input placeholder="Project keywords..." [matChipInputFor]="chipList"
+                          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                          (matChipInputTokenEnd)="add($event)">
+                      </mat-chip-list>
+                    </mat-form-field>
+                  </div>
+                </div>
+              <div class="row  mb-3">
+             
+              </div>
+              
+
+              <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save Details</button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p>{{projectDetails.value.isActive}}</p>

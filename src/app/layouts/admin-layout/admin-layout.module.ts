@@ -13,6 +13,9 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { CompanyDetailsComponent } from '../../company-details/company-details.component';
 import { ProjectDetailsComponent } from '../../project-details/project-details.component';
+import { CreateProjectComponent } from '../../create-project/create-project.component';
+
+
 import {
   MatButtonModule,
   MatInputModule,
@@ -24,7 +27,13 @@ import {
   MatIconModule,
   MatProgressSpinnerModule,
   MatTableModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatSortModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatRadioModule,
+  MatChipsModule,
+  MatCheckboxModule
 } from '@angular/material';
 @NgModule({
   imports: [
@@ -42,7 +51,13 @@ import {
     MatIconModule,
     MatProgressSpinnerModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSortModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRadioModule,
+    MatChipsModule,
+    MatCheckboxModule
   ],
   declarations: [
     DashboardComponent,
@@ -54,7 +69,8 @@ import {
     NotificationsComponent,
     UpgradeComponent,
     CompanyDetailsComponent,
-    ProjectDetailsComponent
+    ProjectDetailsComponent,
+    CreateProjectComponent
   ]
 })
 

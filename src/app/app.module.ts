@@ -24,6 +24,7 @@ import {
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { CompanyDetailsComponent } from './company-details/company-details.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
+import { CreateProjectComponent } from './create-project/create-project.component';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { ProjectDetailsComponent } from './project-details/project-details.compo
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    // CreateProjectComponent,
     // ProjectDetailsComponent,
     // CompanyDetailsComponent,
 

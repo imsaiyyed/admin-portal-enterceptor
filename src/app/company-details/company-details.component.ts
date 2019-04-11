@@ -1,10 +1,5 @@
 import { Component, OnInit, SimpleChanges, OnChanges } from "@angular/core";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroupDirective,
-  NgForm
-} from "@angular/forms";
+import { FormBuilder } from "@angular/forms";
 import { Validators } from "@angular/forms";
 import countries from "../../assets/json/countries.json";
 import states from "../../assets/json/states.json";
