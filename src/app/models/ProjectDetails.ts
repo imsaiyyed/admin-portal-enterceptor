@@ -1,9 +1,10 @@
 export class ProjectDetails{
-    projectId:number;
-    projectTitle:String;
-    startDate:Date;
-    endDate:Date;
-    isActive:boolean;
-    tags:string;
-    projectLogo:File;
+    ProjectId:number;
+    ProjectTitle:String;
+    StartDate:Date;
+    EndDate:Date;
+    IsActive:boolean;
+    Tags:string;
+    ProjectLogo:File;
+    UserId:number;
 }

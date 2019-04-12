@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
@@ -25,11 +26,15 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { CompanyDetailsComponent } from './company-details/company-details.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { CreateProjectComponent } from './create-project/create-project.component';
+import { AccountDetailsComponent } from './account-details/account-details.component';
+import { CreateAccountComponent } from './create-account/create-account.component';
+import { ClientDetailsComponent } from './client-details/client-details.component';
 
 @NgModule({
   imports: [
     BrowserAnimationsModule,
     FormsModule,
+    HttpClientModule,
     HttpModule,
     ComponentsModule,
     RouterModule,
@@ -41,6 +46,9 @@ import { CreateProjectComponent } from './create-project/create-project.componen
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    // ClientDetailsComponent,
+    // CreateAccountComponent,
+    // AccountDetailsComponent,
     // CreateProjectComponent,
     // ProjectDetailsComponent,
     // CompanyDetailsComponent,

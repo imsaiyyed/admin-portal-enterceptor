@@ -1,39 +1,39 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator, MatTableDataSource,MatSort} from '@angular/material';
-import {ProjectDetails} from '../models/ProjectDetails';
+import {AccountDetails} from '../models/AccountDetails';
 import {SelectionModel} from '@angular/cdk/collections';
-import {ProjectDetailsService} from '../services/project-service/project-details.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+import {AccountDetailsService} from '../services/account-service/account-details.service';
 @Component({
-  selector: 'app-project-details',
-  templateUrl: './project-details.component.html',
-  styleUrls: ['./project-details.component.css']
+  selector: 'app-account-details',
+  templateUrl: './account-details.component.html',
+  styleUrls: ['./account-details.component.css']
 })
-export class ProjectDetailsComponent implements OnInit {
+export class AccountDetailsComponent implements OnInit {
   displayedColumns: string[] ;
   dataSource ;
-  selection = new SelectionModel<ProjectDetails>(true, []);
+  selection = new SelectionModel<AccountDetails>(true, []);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private projectDetails:ProjectDetailsService,private ngxService: NgxUiLoaderService){
+  constructor(private accountDetails:AccountDetailsService){
 
-  }  
+  }
   ngOnInit() {
-    // let PROJECT_DATA;
-    this.ngxService.start(); 
-    this.projectDetails.initProjects().subscribe((resp)=>{
+    this.accountDetails.initAccounts().subscribe((resp)=>{
       // PROJECT_DATA=resp.body;
-      this.projectDetails.PROJECT_DATA=resp.body;
-      this.dataSource = new MatTableDataSource<ProjectDetails>(this.projectDetails.PROJECT_DATA);
+      this.accountDetails.ACCOUNT_DATA=resp.body;
+      this.dataSource = new MatTableDataSource<AccountDetails>(this.accountDetails.ACCOUNT_DATA);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.ngxService.stop(); 
     });
-    this.displayedColumns= ['ProjectId', 'projectTitle', 'startDate', 'endDate','isActive','edit'];
-   
-    
+
+    this.displayedColumns= ['accountId','accountName', 'isActive','edit'];
+    const ACCOUNT_DATA=this.accountDetails.ACCOUNT_DATA;
+    console.log(ACCOUNT_DATA);
+    this.dataSource = new MatTableDataSource<AccountDetails>(ACCOUNT_DATA);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
 
@@ -53,11 +53,11 @@ export class ProjectDetailsComponent implements OnInit {
         this.dataSource.data.forEach(row => this.selection.select(row));
   }
    /** The label for the checkbox on the passed row */
-   checkboxLabel(row?: ProjectDetails): string {
+   checkboxLabel(row?: AccountDetails): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.ProjectId + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.AccountId + 1}`;
   }
  
   applyFilter(filterValue: string) {
@@ -67,6 +67,3 @@ export class ProjectDetailsComponent implements OnInit {
     console.log(record);
   }
 }
-
-
-

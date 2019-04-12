@@ -68,14 +68,6 @@ export class CompanyDetailsComponent implements OnInit {
             this.companyDetails.get("address").get("country").value ==
               x.country_id
         );
-        // if (this.cities.length <= 0) {
-        //   console.log(this.cities);
-        //   this.companyDetails
-        //     .get("address")
-        //     .get("city")
-        //     .reset("Ok");
-        // }
-        // this.companyDetails.get('address').get('city').setValue(this.cities[0].id);
       });
   }
   // ngOnChanges(changes: SimpleChanges): void {

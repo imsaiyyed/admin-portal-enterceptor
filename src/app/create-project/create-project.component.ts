@@ -43,14 +43,14 @@ export class CreateProjectComponent implements OnInit {
       let project:ProjectDetails;
       project=this.projectDetailsService.getProject(projectId);
       this.projectDetails= this.fb.group({
-        projectTitle: [project.projectTitle, [Validators.required]],
+        projectTitle: [project.ProjectTitle, [Validators.required]],
         projectLogo: ["", [Validators.required]],
-        startDate: [project.startDate, [Validators.required]],
-        endDate: [project.endDate, [Validators.required]],
-        isActive: [project.isActive, [Validators.required]],
-        tags: [project.tags, [Validators.required]]
+        startDate: [project.StartDate, [Validators.required]],
+        endDate: [project.EndDate, [Validators.required]],
+        isActive: [project.IsActive, [Validators.required]],
+        tags: [project.Tags, [Validators.required]]
       });
-      let stringTags=project.tags.split(',');
+      let stringTags=project.Tags.split(',');
       for(let i=0;i<stringTags.length;i++){
         this.tags.push({name:stringTags[i]})
       }

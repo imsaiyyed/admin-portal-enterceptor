@@ -14,6 +14,8 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { CompanyDetailsComponent } from '../../company-details/company-details.component';
 import { ProjectDetailsComponent } from '../../project-details/project-details.component';
 import { CreateProjectComponent } from '../../create-project/create-project.component';
+import { AccountDetailsComponent } from '../../account-details/account-details.component';
+import { NgxUiLoaderModule, NgxUiLoaderConfig, POSITION, SPINNER, PB_DIRECTION } from  'ngx-ui-loader';
 
 
 import {
@@ -33,8 +35,17 @@ import {
   MatNativeDateModule,
   MatRadioModule,
   MatChipsModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  
 } from '@angular/material';
+import { CreateAccountComponent } from '../../create-account/create-account.component';
+import { ClientDetailsComponent } from '../../client-details/client-details.component';
+
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  fgsColor: 'red',
+  bgsSize: 40,
+  fgsType: SPINNER.threeStrings,
+};
 @NgModule({
   imports: [
     CommonModule,
@@ -57,7 +68,8 @@ import {
     MatNativeDateModule,
     MatRadioModule,
     MatChipsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
   ],
   declarations: [
     DashboardComponent,
@@ -70,7 +82,10 @@ import {
     UpgradeComponent,
     CompanyDetailsComponent,
     ProjectDetailsComponent,
-    CreateProjectComponent
+    CreateProjectComponent,
+    AccountDetailsComponent,
+    CreateAccountComponent,
+    ClientDetailsComponent
   ]
 })
 
