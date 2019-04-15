@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
@@ -29,7 +29,28 @@ import { CreateProjectComponent } from './create-project/create-project.componen
 import { AccountDetailsComponent } from './account-details/account-details.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { ClientDetailsComponent } from './client-details/client-details.component';
+import { LoginComponent } from './login/login.component';
 
+import {
+  MatButtonModule,
+  MatInputModule,
+  MatRippleModule,
+  MatFormFieldModule,
+  MatTooltipModule,
+  MatSelectModule,
+  MatBadgeModule,
+  MatIconModule,
+  MatProgressSpinnerModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatRadioModule,
+  MatChipsModule,
+  MatCheckboxModule,
+  
+} from '@angular/material';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -39,6 +60,25 @@ import { ClientDetailsComponent } from './client-details/client-details.componen
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
+    MatButtonModule,
+  MatInputModule,
+  MatRippleModule,
+  MatFormFieldModule,
+  MatTooltipModule,
+  MatSelectModule,
+  MatBadgeModule,
+  MatIconModule,
+  MatProgressSpinnerModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatRadioModule,
+  MatChipsModule,
+  MatCheckboxModule,
+  ReactiveFormsModule,
+  
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     })
@@ -46,6 +86,7 @@ import { ClientDetailsComponent } from './client-details/client-details.componen
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    LoginComponent,
     // ClientDetailsComponent,
     // CreateAccountComponent,
     // AccountDetailsComponent,
