@@ -15,6 +15,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/account-details', title: 'Account Details',  icon:'person', class: '' },
     { path: '/client-details', title: 'Client Details',  icon:'person', class: '' },
     { path: '/employee-details', title: 'Employee Details',  icon:'person', class: '' },
+    { path: '/project-account', title: 'Project Account',  icon:'person', class: '' },
 
     { path: '/table-list', title: 'Table List',  icon:'content_paste', class: '' },
     { path: '/typography', title: 'Typography',  icon:'library_books', class: '' },

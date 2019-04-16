@@ -54,6 +54,8 @@ import {
 import { CreateClientComponent } from './create-client/create-client.component';
 import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
 import { CreateEmployeeComponent } from './create-employee/create-employee.component';
+import { ProjectAccountMappingComponent } from './project-account-mapping/project-account-mapping.component';
+import { CerateProjectAccountMapComponent } from './cerate-project-account-map/cerate-project-account-map.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -88,6 +90,8 @@ import { CreateEmployeeComponent } from './create-employee/create-employee.compo
     AppComponent,
     AdminLayoutComponent,
     LoginComponent,
+    // CerateProjectAccountMapComponent,
+    // ProjectAccountMappingComponent,
     // CreateEmployeeComponent,
     // EmployeeDetailsComponent,
     // CreateClientComponent,
