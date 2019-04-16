@@ -4,24 +4,23 @@ import { Validators } from "@angular/forms";
 import { AccountDetailsService } from "../services/account-service/account-details.service";
 import { Router, ActivatedRoute, ParamMap } from "@angular/router";
 import { AccountDetails } from "../models/AccountDetails";
+import {MatSnackBar} from '@angular/material';
+
 @Component({
   selector: "app-create-account",
   templateUrl: "./create-account.component.html",
   styleUrls: ["./create-account.component.css"]
 })
 export class CreateAccountComponent implements OnInit {
-  accountDetails = this.fb.group({
-    accountName: ["", [Validators.required]],
-    userId: [1],
-    isActive: ["",Validators.required]
-  });
+  accountDetails ;
   isLoading = false;
-
+  isEdit=false;
   constructor(
     private fb: FormBuilder,
     private accountDetailsService: AccountDetailsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackBar:MatSnackBar
   ) {
 
   }
@@ -30,19 +29,22 @@ export class CreateAccountComponent implements OnInit {
     let accountId = parseInt(this.route.snapshot.paramMap.get("accountId"));
     if (accountId == 0) {
       this.accountDetails = this.fb.group({
-        accountId:[0],
-        accountName: ["", [Validators.required]],
-        userId: [1],
-        isActive: ["",Validators.required]
+        AccountId:[0],
+        AccountName: ["", [Validators.required]],
+        UserId: [1],
+        IsActive: ["",Validators.required]
       });
     } else {
+      this.isEdit=true;
       let account: AccountDetails;
       account = this.accountDetailsService.getAccount(accountId);
+      console.log(account);
+
       this.accountDetails = this.fb.group({
-        accountId:[account.AccountId],
-        accountName: [account.AccountName, [Validators.required]],
-        userId: [account.UserId],
-        isActive: [account.IsActive,Validators.required]
+        AccountId:[account.AccountId],
+        AccountName: [account.AccountName, [Validators.required]],
+        UserId: [account.UserId],
+        IsActive: [account.IsActive,Validators.required]
       });
     }
   }
@@ -51,12 +53,32 @@ export class CreateAccountComponent implements OnInit {
     console.log(this.accountDetails.value);
     let accountId = parseInt(this.route.snapshot.paramMap.get("accountId"));
     if (accountId == 0) {
-      console.log(
-        this.accountDetailsService.addAccount(this.accountDetails.value)
-      );
+    this.accountDetailsService.addAccount(this.accountDetails.value).subscribe((resp)=>{
+      console.log('Response',resp);
+    },(error)=>{
+      console.log('Error',error)
+      if(error.statusText=='Created'){
+        this.snackBar.open('Account added successfully...', 'Ok', {
+          duration: 3000
+        });
+        this.router.navigate(['/account-details']);
+      }
+    })
+   
+      
     }
     else{
-     
+      this.accountDetailsService.updateAccount(this.accountDetails.value).subscribe((resp)=>{
+        console.log('Response',resp);
+      },(error)=>{
+        if(error.statusText=='Created'){
+          this.snackBar.open('Account updated successfully...', 'Ok', {
+            duration: 3000
+          });
+          this.router.navigate(['/account-details']);
+        }
+        console.log('Error',error)
+      });
     }
    
   }

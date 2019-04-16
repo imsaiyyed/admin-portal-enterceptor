@@ -6,12 +6,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginService {
 
-  constructor(private http:HttpClient) { }
-  public login()
+  constructor(private http:HttpClient){ }
+  public login():boolean
   {
     this.http.get('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/users').subscribe((response)=>{
       console.log("RESPONSE ",response);
     });
+    return true;
   }
 
   

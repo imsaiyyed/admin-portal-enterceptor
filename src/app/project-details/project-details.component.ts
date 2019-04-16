@@ -4,6 +4,8 @@ import {ProjectDetails} from '../models/ProjectDetails';
 import {SelectionModel} from '@angular/cdk/collections';
 import {ProjectDetailsService} from '../services/project-service/project-details.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import {MatSnackBar} from '@angular/material';
+
 @Component({
   selector: 'app-project-details',
   templateUrl: './project-details.component.html',
@@ -17,7 +19,7 @@ export class ProjectDetailsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private projectDetails:ProjectDetailsService,private ngxService: NgxUiLoaderService){
+  constructor(private projectDetails:ProjectDetailsService,private ngxService: NgxUiLoaderService,private snackBar: MatSnackBar){
 
   }  
   ngOnInit() {
@@ -31,13 +33,21 @@ export class ProjectDetailsComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.ngxService.stop(); 
     });
-    this.displayedColumns= ['ProjectId', 'projectTitle', 'startDate', 'endDate','isActive','edit'];
+    this.displayedColumns= ['ProjectId', 'projectTitle', 'startDate', 'endDate','isActive','edit','delete'];
    
     
   }
 
 
-
+  deleteProject(project:ProjectDetails){
+    this.projectDetails.deleteProject(project);
+    this.dataSource=new MatTableDataSource<ProjectDetails>(this.projectDetails.PROJECT_DATA);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.snackBar.open('Client deleted...', 'Ok', {
+      duration: 3000
+    });
+  }
 
 
   /** Whether the number of selected elements matches the total number of rows. */

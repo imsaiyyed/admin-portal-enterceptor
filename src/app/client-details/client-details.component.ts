@@ -2,30 +2,38 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator, MatTableDataSource,MatSort} from '@angular/material';
 import {AccountDetails} from '../models/AccountDetails';
 import {SelectionModel} from '@angular/cdk/collections';
-import {AccountDetailsService} from '../services/account-service/account-details.service';
+import {ClientDetailsService} from '../services/client-service/client-details.service';
+import { ClientDetails } from '../models/ClientDetails';
+import {MatSnackBar} from '@angular/material';
+
 @Component({
   selector: 'app-client-details',
   templateUrl: './client-details.component.html',
-  styleUrls: ['./client-details.component.scss']
+  styleUrls: ['./client-details.component.css']
 })
 export class ClientDetailsComponent implements OnInit {
   displayedColumns: string[] ;
   dataSource ;
-  selection = new SelectionModel<AccountDetails>(true, []);
+  selection = new SelectionModel<ClientDetails>(true, []);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private accountDetails:AccountDetailsService){
+  constructor(private clientDetailsService:ClientDetailsService,private snackBar: MatSnackBar){
 
   }
   ngOnInit() {
-    this.displayedColumns= ['accountId','accountName', 'isActive','edit'];
-    const ACCOUNT_DATA=this.accountDetails.ACCOUNT_DATA;
-    console.log(ACCOUNT_DATA);
-    this.dataSource = new MatTableDataSource<AccountDetails>(ACCOUNT_DATA);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.clientDetailsService.initClients().subscribe((resp)=>{
+      // PROJECT_DATA=resp.body;
+      console.log('init',resp.body);
+      this.clientDetailsService.CLIENT_DATA=resp.body;
+      this.dataSource = new MatTableDataSource<ClientDetails>(this.clientDetailsService.CLIENT_DATA);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+
+    this.displayedColumns= ['Id','ClientEmail', 'Designation','ClientName','IsActive','edit','delete'];
+    
   }
 
 
@@ -45,11 +53,11 @@ export class ClientDetailsComponent implements OnInit {
         this.dataSource.data.forEach(row => this.selection.select(row));
   }
    /** The label for the checkbox on the passed row */
-   checkboxLabel(row?: AccountDetails): string {
+   checkboxLabel(row?: ClientDetails): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.AccountId + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
   }
  
   applyFilter(filterValue: string) {
@@ -57,5 +65,15 @@ export class ClientDetailsComponent implements OnInit {
   }
   editRecord(record){
     console.log(record);
+  }
+  deleteClient(client:ClientDetails){
+
+    this.clientDetailsService.deleteClient(client);
+    this.dataSource=new MatTableDataSource<ClientDetails>(this.clientDetailsService.CLIENT_DATA);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.snackBar.open('Client deleted...', 'Ok', {
+      duration: 3000
+    });
   }
 }

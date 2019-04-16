@@ -6,6 +6,7 @@ import { MatChipInputEvent } from "@angular/material";
 import { Router, ActivatedRoute, ParamMap } from "@angular/router";
 import { ProjectDetailsService } from "../services/project-service/project-details.service";
 import { ProjectDetails } from "../models/ProjectDetails";
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: "app-create-project",
@@ -17,6 +18,7 @@ export class CreateProjectComponent implements OnInit {
   selectable = true;
   removable = true;
   addOnBlur = true;
+  isEdit=false;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   tags: Tag[] = [];
   projectDetails ;
@@ -24,6 +26,7 @@ export class CreateProjectComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    private snackBar:MatSnackBar,
     private projectDetailsService: ProjectDetailsService
   ) {}
 
@@ -31,39 +34,79 @@ export class CreateProjectComponent implements OnInit {
     let projectId = parseInt(this.route.snapshot.paramMap.get('projectId'));
     if(projectId==0){
       this.projectDetails= this.fb.group({
-        projectTitle: ["", [Validators.required]],
-        projectLogo: ["", [Validators.required]],
-        startDate: ["", [Validators.required]],
-        endDate: ["", [Validators.required]],
-        isActive: ["", [Validators.required]],
-        tags: ["", [Validators.required]]
+        ProjectTitle: ["", [Validators.required]],
+        UserId: [1],
+        StartDate: ["", [Validators.required]],
+        EndDate: ["", [Validators.required]],
+        IsActive: ["", [Validators.required]],
+        Tags: ["", [Validators.required]]
       });
     }
     else{
+      this.isEdit=true;
       let project:ProjectDetails;
       project=this.projectDetailsService.getProject(projectId);
+      console.log(project.StartDate);
+
       this.projectDetails= this.fb.group({
-        projectTitle: [project.ProjectTitle, [Validators.required]],
-        projectLogo: ["", [Validators.required]],
-        startDate: [project.StartDate, [Validators.required]],
-        endDate: [project.EndDate, [Validators.required]],
-        isActive: [project.IsActive, [Validators.required]],
-        tags: [project.Tags, [Validators.required]]
+        ProjectTitle: [project.ProjectTitle, [Validators.required]],
+        UserId: [project.UserId],
+        ProjectId:[project.ProjectId],
+        StartDate: [project.StartDate, [Validators.required]],
+        EndDate: [project.EndDate, [Validators.required]],
+        IsActive: [project.IsActive, [Validators.required]],
+        Tags: [project.Tags, [Validators.required]]
       });
+      let startDate=new Date(project.StartDate);
+      let endDate=new Date(project.EndDate);
+      
+
+      this.projectDetails.get('StartDate').setValue(startDate.toISOString().slice(0,10));
+      this.projectDetails.get('EndDate').setValue(endDate.toISOString().slice(0,10));
+
+      console.log(this.projectDetails.get('StartDate'));
+
       let stringTags=project.Tags.split(',');
-      for(let i=0;i<stringTags.length;i++){
+      for(let i=0;i<stringTags.length-1;i++){
         this.tags.push({name:stringTags[i]})
       }
       
-      console.log(project);
     }
    
     
   }
   onSubmit() {
     // TODO: Use EventEmitter with form value
-    console.log(this.projectDetails.value);
-    console.log(this.projectDetailsService.addProject(this.projectDetails.value));
+    let projectId = parseInt(this.route.snapshot.paramMap.get('projectId'));
+    if(projectId==0){
+      console.log(this.projectDetails.value);
+      this.projectDetailsService.addProject(this.projectDetails.value).subscribe((resp)=>{
+        console.log(resp);
+      },(error)=>{
+        console.log(error);
+        if(error.statusText=='Created'){
+          this.snackBar.open('Project added successfully...', 'Ok', {
+            duration: 3000
+          });
+          this.router.navigate(['/project-details']);
+        }
+  
+      });
+    }else{
+      this.projectDetailsService.updateProject(this.projectDetails.value).subscribe((resp)=>{
+        console.log(resp);
+      },(error)=>{
+        console.log(error);
+        if(error.statusText=='Created'){
+          this.snackBar.open('Project updated successfully...', 'Ok', {
+            duration: 3000
+          });
+          this.router.navigate(['/project-details']);
+        }
+      });
+    }
+    
+    console.log();
   }
 
   add(event: MatChipInputEvent): void {
@@ -80,7 +123,7 @@ export class CreateProjectComponent implements OnInit {
       console.log(newValue);
       console.log(this.tags[i].name);
     }
-    this.projectDetails.get("tags").setValue(newValue);
+    this.projectDetails.get("Tags").setValue(newValue);
 
     // Reset the input value
     if (input) {
@@ -94,14 +137,14 @@ export class CreateProjectComponent implements OnInit {
       this.tags.splice(index, 1);
     }
   }
-  onFileChange(event) {
-    const reader = new FileReader();
+  // onFileChange(event) {
+  //   const reader = new FileReader();
 
-    if (event.target.files && event.target.files.length) {
-      console.log(event.target.files);
-      this.projectDetails.get("projectLogo").setValue(event.target.files[0]);
-    }
-  }
+  //   if (event.target.files && event.target.files.length) {
+  //     console.log(event.target.files);
+  //     this.projectDetails.get("projectLogo").setValue(event.target.files[0]);
+  //   }
+  // }
 }
 export interface Tag {
   name: string;

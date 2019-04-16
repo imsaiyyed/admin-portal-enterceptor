@@ -5,6 +5,6 @@ export class ProjectDetails{
     EndDate:Date;
     IsActive:boolean;
     Tags:string;
-    ProjectLogo:File;
     UserId:number;
 }
+

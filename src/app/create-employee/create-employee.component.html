@@ -1,0 +1,67 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Edit Profile</h4>
+            <p class="card-category">Complete your profile</p>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="employeeDetails" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-md-5">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="First name" formControlName="FirstName" type="text">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-5">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Last name" formControlName="LastName" type="text">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-5">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Employee Email" formControlName="Email" type="text">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-5">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Employee Designation" formControlName="Designation" type="text">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-5">
+                  <mat-checkbox formControlName="AllowMonitoring">Allow monitoring?</mat-checkbox>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <mat-label>Eployee Status</mat-label>
+                    <mat-select [disabled]="!isEdit" formControlName="IsActive">
+                      <mat-option selected="selected" [value]="true">
+                        Active
+                      </mat-option>
+                      <mat-option [value]="false">
+                        In-Active
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+              <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save Details</button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

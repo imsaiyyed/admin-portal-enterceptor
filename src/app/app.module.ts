@@ -2,7 +2,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -51,6 +51,9 @@ import {
   MatCheckboxModule,
   
 } from '@angular/material';
+import { CreateClientComponent } from './create-client/create-client.component';
+import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
+import { CreateEmployeeComponent } from './create-employee/create-employee.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -72,8 +75,6 @@ import {
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
-  MatDatepickerModule,
-  MatNativeDateModule,
   MatRadioModule,
   MatChipsModule,
   MatCheckboxModule,
@@ -87,6 +88,9 @@ import {
     AppComponent,
     AdminLayoutComponent,
     LoginComponent,
+    // CreateEmployeeComponent,
+    // EmployeeDetailsComponent,
+    // CreateClientComponent,
     // ClientDetailsComponent,
     // CreateAccountComponent,
     // AccountDetailsComponent,

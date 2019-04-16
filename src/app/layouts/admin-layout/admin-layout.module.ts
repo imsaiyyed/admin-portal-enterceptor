@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
@@ -36,15 +36,19 @@ import {
   MatRadioModule,
   MatChipsModule,
   MatCheckboxModule,
+  MatSnackBarModule,
   
 } from '@angular/material';
 import { CreateAccountComponent } from '../../create-account/create-account.component';
 import { ClientDetailsComponent } from '../../client-details/client-details.component';
+import { CreateClientComponent } from '../../create-client/create-client.component';
+import { EmployeeDetailsComponent } from '../../employee-details/employee-details.component';
+import { CreateEmployeeComponent } from '../../create-employee/create-employee.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: 'red',
   bgsSize: 40,
-  fgsType: SPINNER.threeStrings,
+  fgsType:SPINNER.threeStrings,
 };
 @NgModule({
   imports: [
@@ -69,6 +73,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatRadioModule,
     MatChipsModule,
     MatCheckboxModule,
+    MatSnackBarModule,
+  
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
   ],
   declarations: [
@@ -85,7 +91,17 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     CreateProjectComponent,
     AccountDetailsComponent,
     CreateAccountComponent,
-    ClientDetailsComponent
+    ClientDetailsComponent,
+    CreateClientComponent,
+    EmployeeDetailsComponent,
+    CreateEmployeeComponent
+
+  ],
+  providers:[
+  ],
+  exports: [
+    
+    MatNativeDateModule,
   ]
 })
 

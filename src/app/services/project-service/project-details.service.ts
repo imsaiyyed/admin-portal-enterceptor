@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ProjectDetails } from '../../models/ProjectDetails';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
+
 import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
@@ -25,14 +26,30 @@ export class ProjectDetailsService {
     return project;
   }
   
-  addProject(project:ProjectDetails):boolean{
-    let oldLength=this.PROJECT_DATA.length;
-    project.ProjectId=oldLength+1;
-    let newLength=this.PROJECT_DATA.push(project);
-    if(oldLength<newLength){
-      return true;
-    }
-    return false;
+  addProject(project:ProjectDetails){
+    // console.log(project.StartDate.toLocaleDateString())
+    return this.http.post('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/projects',{...project});
   }
+  
+updateProject(project:ProjectDetails){
+  console.log(project);
+  let isActive=0;
+  if(project['IsActive']){
+    isActive=1;
+  }
+  return this.http.put('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/projects',{...project,IsActive:isActive});
+}
+deleteProject(project:ProjectDetails){
+  console.log('Delete',project)
+  const httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: {ProjectId:project['ProjectId']}
+};
+  this.http.delete('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/projects',httpOptions).subscribe((resp)=>{
+    console.log(resp)
+  });
+  let index=this.PROJECT_DATA.indexOf(project);
+  console.log(index);
+  this.PROJECT_DATA.splice(index,1);
+}
 
 }

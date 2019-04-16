@@ -14,6 +14,9 @@ import { CreateProjectComponent } from "../../create-project/create-project.comp
 import { AccountDetailsComponent } from "../../account-details/account-details.component";
 import { CreateAccountComponent } from "../../create-account/create-account.component";
 import { ClientDetailsComponent } from "../../client-details/client-details.component";
+import { CreateClientComponent } from "../../create-client/create-client.component";
+import { EmployeeDetailsComponent } from "../../employee-details/employee-details.component";
+import { CreateEmployeeComponent } from "../../create-employee/create-employee.component";
 
 export const AdminLayoutRoutes: Routes = [
   // {
@@ -77,5 +80,10 @@ export const AdminLayoutRoutes: Routes = [
     path: "account-details/create-account/:accountId",
     component: CreateAccountComponent
   },
-  { path: "client-details", component: ClientDetailsComponent }
+  { path: "client-details", component: ClientDetailsComponent },
+  {path:"client-details/create-client/:clientId",component:CreateClientComponent},
+  {path:"employee-details",component:EmployeeDetailsComponent},
+  {path:"employee-details/create-employee/:employeeId",component:CreateEmployeeComponent},
+
+
 ];
