@@ -11,12 +11,13 @@ import { MatSnackBar } from '@angular/material';
 @Component({
   selector: 'app-cerate-project-account-map',
   templateUrl: './cerate-project-account-map.component.html',
-  styleUrls: ['./cerate-project-account-map.component.scss']
+  styleUrls: ['./cerate-project-account-map.component.css']
 })
 export class CerateProjectAccountMapComponent implements OnInit {
   accounts:AccountDetails[];
   projects:ProjectDetails[];
-  projectAccountDetails;
+  projectAccountDetails=this.fb.group({});
+  isEdit=false;
   constructor(private fb: FormBuilder,
     private accountDetailsService: AccountDetailsService,
     private projectDetailsService:ProjectDetailsService,
@@ -27,7 +28,7 @@ export class CerateProjectAccountMapComponent implements OnInit {
   
   
   ngOnInit() {
-    let id = parseInt(this.route.snapshot.paramMap.get("id"));
+    let projectId = parseInt(this.route.snapshot.paramMap.get("id"));
 
     this.accountDetailsService.initAccounts().subscribe((resp)=>{
       this.accountDetailsService.ACCOUNT_DATA=resp.body;
@@ -37,18 +38,8 @@ export class CerateProjectAccountMapComponent implements OnInit {
       this.projectDetailsService.PROJECT_DATA=resp.body;
       this.projects=resp.body;
     });
-    // "Id": 3,
-    //     "ProjectId": 3,
-    //     "ProjectTitle": "ECPQ",
-    //     "AccountId": 3,
-    //     "AccountName": "Salesforce",
-    //     "StartDate": null,
-    //     "EndDate": null,
-    //     "Renewable": false,
-    //     "RenewalDate": null,
-    //     "IsActive": true,
-    //     "UserId": 1
-    if (id == 0) {
+
+    if (projectId == 0) {
       this.projectAccountDetails = this.fb.group({
         Id:[0],
         UserId: [1],
@@ -61,8 +52,71 @@ export class CerateProjectAccountMapComponent implements OnInit {
         IsActive:[true]
       });
     }else{
+      //let record=this.projectAccountService.getMapping(id);
+
+      this.projectAccountDetails = this.fb.group({
+        Id:[0],
+        UserId: [1],
+        StartDate: ["",Validators.required],
+        EndDate:["",[Validators.required]],
+        Renewable:[true,[Validators.required]],
+        RenewalDate:["",[Validators.required]],
+        ProjectId:[projectId,[Validators.required]],
+        AccountId:[0,[Validators.required]],
+        IsActive:[true]
+      });
+    }
+
+    this.onChanges();
+
+  }
+
+  onChanges(): void {
+    this.projectAccountDetails
+      .get("Renewable")
+      .valueChanges.subscribe(val => {
+        console.log(val);
+        if(!val){
+          this.projectAccountDetails
+          .get("RenewalDate").disable();
+        }
+        else{
+          this.projectAccountDetails
+          .get("RenewalDate").enable();
+        }
+        
+      });
+    }
+
+    onSubmit(){
+      let id = parseInt(this.route.snapshot.paramMap.get("id"));
+      console.log(this.projectAccountDetails.value);
+      // if(id==0){
+      this.projectAccountService.addMapping(this.projectAccountDetails.value).subscribe((resp)=>{
+        console.log(resp);
+      },(error)=>{
+        console.log('Erro',error);
+        if(error.statusText=='Created'){
+          this.snackBar.open('Record added successfully...', 'Ok', {
+            duration: 3000
+          });
+          this.router.navigate(['/project-details/project-profile/',id]);
+        }
+      });
+    // }else{
+    //   this.projectAccountService.updateMapping(this.projectAccountDetails.value).subscribe((resp)=>{
+    //     console.log(resp);
+    //   },(error)=>{
+    //     console.log('Erro',error);
+    //     if(error.statusText=='Created'){
+    //       this.snackBar.open('Record added successfully...', 'Ok', {
+    //         duration: 3000
+    //       });
+    //       this.router.navigate(['/project-account']);
+    //     }
+    //   });
+    // }
 
     }
-  }
 
 }

@@ -1,0 +1,84 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header card-header-danger">
+              <h4 class="card-title">Edit Profile</h4>
+              <p class="card-category">Complete your profile</p>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="projectClientDetails" (ngSubmit)="onSubmit()">
+                <div class="row">
+                  <div class="col-md-5">
+                    <mat-form-field>
+                      <mat-label>Project</mat-label>
+                      <mat-select [disabled]="true" formControlName="ProjectId">
+                        <mat-option [value]="project.ProjectId" *ngFor="let project of projects">
+                          {{project.ProjectTitle}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-5">
+                    <mat-form-field>
+                      <mat-label>Account</mat-label>
+                      <mat-select [disabled]="true" formControlName="AccountId">
+                        <mat-option [value]="account.AccountId" *ngFor="let account of accounts">
+                          {{account.AccountName}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <mat-form-field>
+                          <mat-label>Client</mat-label>
+                          <mat-select formControlName="ClientId">
+                            <mat-option [value]="client.Id" *ngFor="let client of clients">
+                              {{client.ClientName}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    <div class="col-md-3">
+                      <mat-form-field>
+                        <mat-label>Service Status</mat-label>
+                        <mat-select [disabled]="!isEdit" formControlName="IsActive">
+                          <mat-option selected="selected" [value]="true">
+                            Active
+                          </mat-option>
+                          <mat-option [value]="false">
+                            In-Active
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                <div class="row">
+                  <div class="col-md-5">
+                    <mat-form-field>
+                      <input matInput type="date" placeholder="Start Date of Service" formControlName="StartDate">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-5">
+                    <mat-form-field>
+                      <input matInput type="date" placeholder="End Date of Service" formControlName="EndDate">
+                    </mat-form-field>
+                  </div>
+                </div>
+         
+             
+  
+  
+                <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save Details</button>
+                <div class="clearfix"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>

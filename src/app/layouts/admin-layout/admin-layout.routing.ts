@@ -19,6 +19,8 @@ import { EmployeeDetailsComponent } from "../../employee-details/employee-detail
 import { CreateEmployeeComponent } from "../../create-employee/create-employee.component";
 import { ProjectAccountMappingComponent } from "../../project-account-mapping/project-account-mapping.component";
 import { CerateProjectAccountMapComponent } from "../../cerate-project-account-map/cerate-project-account-map.component";
+import { ProjectProfileComponent } from "../../project-profile/project-profile.component";
+import { CreateProjectClientMapComponent } from "../../create-project-client-map/create-project-client-map.component";
 
 export const AdminLayoutRoutes: Routes = [
   // {
@@ -77,6 +79,8 @@ export const AdminLayoutRoutes: Routes = [
     path: "project-details/create-project/:projectId",
     component: CreateProjectComponent
   },
+  { path: "project-details/project-profile/:projectId", component: ProjectProfileComponent },
+
   { path: "account-details", component: AccountDetailsComponent },
   {
     path: "account-details/create-account/:accountId",
@@ -88,5 +92,6 @@ export const AdminLayoutRoutes: Routes = [
   {path:"employee-details/create-employee/:employeeId",component:CreateEmployeeComponent},
   {path:"project-account",component:ProjectAccountMappingComponent},
   {path:"project-account/create-mapping/:id",component:CerateProjectAccountMapComponent},
+  {path:"project-client/create-mapping/:projectId/:accountId",component:CreateProjectClientMapComponent},
 
 ];

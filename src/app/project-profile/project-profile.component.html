@@ -1,29 +1,43 @@
 <div class="main-content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <!-- <div class="card">
-          <div class="card-body">
-            <div class="row">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Project profile</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Project title</label>
 
-              <div class="col-md-3">
-                <mat-form-field>
-                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
-                </mat-form-field>
+                        <h4 class="card-title">{{project.ProjectTitle}}</h4>
+                            </div>
+                              
+                                <div class="col-md-3">
+                                  <label>Start Date</label><br/>
+                                  <h5>{{project.StartDate | date}}</h5>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>End Date</label><br/>
+                                    <h5>{{project.EndDate | date}}</h5>
+                                  </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <label>Project keywords</label><br/>
 
-              </div>
-              <div class="col-md-3">
-                <a class="btn btn-danger pull-right" mat-raised-button
-                  [routerLink]="['/project-details/create-project', 0]">Add
-                  Project</a>
-              </div>
+                                    <mat-chip-list>
+                                        <mat-chip color="accent"  *ngFor="let tag of tags">{{tag}}</mat-chip>
+                                    </mat-chip-list>
+                                </div>
+                            </div>
+                            <button mat-raised-button type="submit" (click)="linkAccount()" class="btn btn-danger pull-right">Link Account</button>
+                            <div class="clearfix"></div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div> -->
-
-      </div>
-    </div>
-    <div class="row">
+      
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-danger">
@@ -38,10 +52,10 @@
                   <input mat-raised-button matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
                 </mat-form-field>
               </div>
-              <div class="col-md-2">
+              <!-- <div class="col-md-2">
                 <a mat-raised-button [routerLink]="['/project-account/create-mapping', 0]">Create
                   Mapping</a>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="card-body">
@@ -105,8 +119,8 @@
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Edit</th>
                   <td mat-cell *matCellDef="let element">
                     <button mat-icon-button color="accent"
-                      [routerLink]="['project-client/create-mapping/', element.Id]">
-                      <mat-icon aria-label="Edit">edit</mat-icon>
+                      [routerLink]="['/project-client/create-mapping/',project.ProjectId,element.AccountId]">
+                      Link client
                     </button>
                     <!-- <mat-icon (click)="editRecord(element)">edit</mat-icon> -->
                   </td>
@@ -132,5 +146,6 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
-</div>
+  
