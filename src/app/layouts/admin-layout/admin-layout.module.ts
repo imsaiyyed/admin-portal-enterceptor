@@ -37,6 +37,7 @@ import {
   MatChipsModule,
   MatCheckboxModule,
   MatSnackBarModule,
+  MatDialogModule,
   
 } from '@angular/material';
 import { CreateAccountComponent } from '../../create-account/create-account.component';
@@ -78,7 +79,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatChipsModule,
     MatCheckboxModule,
     MatSnackBarModule,
-  
+    MatDialogModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
   ],
   declarations: [

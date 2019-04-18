@@ -91,7 +91,7 @@ export const AdminLayoutRoutes: Routes = [
   {path:"employee-details",component:EmployeeDetailsComponent},
   {path:"employee-details/create-employee/:employeeId",component:CreateEmployeeComponent},
   {path:"project-account",component:ProjectAccountMappingComponent},
-  {path:"project-account/create-mapping/:id",component:CerateProjectAccountMapComponent},
+  {path:"project-account/create-mapping/:id/:isEdit",component:CerateProjectAccountMapComponent},
   {path:"project-client/create-mapping/:projectId/:accountId",component:CreateProjectClientMapComponent},
 
 ];

@@ -1,14 +1,14 @@
-<div class="main-content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-8">
-        <div class="card">
+<!-- <div class="main-content">
+  <div class="container-fluid"> -->
+    <!-- <div class="row customClass">
+      <div class="col-md-12 customClass"> -->
+        <div class="card cardClass">
           <div class="card-header card-header-danger">
             <h4 class="card-title">Edit Profile</h4>
             <p class="card-category">Complete your profile</p>
           </div>
           <div class="card-body">
-            <form [formGroup]="projectAccountDetails" (ngSubmit)="onSubmit()">
+            <form [formGroup]="projectAccountDetails" >
               <div class="row">
                 <div class="col-md-5">
                   <mat-form-field>
@@ -69,15 +69,22 @@
                   </mat-form-field>
                 </div>
               </div>
-
-
-              <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save Details</button>
+              <div class="row  ">
+                  <div class="col-md-6">
+                  </div>
+                  <div class="col-md-3">
+              <button mat-raised-button  (click)="onSubmit()" class="btn btn-danger pull-right">Save Details</button>
+              </div>
+              <div class="col-md-3">
+                  <button mat-raised-button  (click)="closeDialog()" class="btn btn-danger pull-right">Cancel</button>
+                  </div>
+              </div>
               <div class="clearfix"></div>
             </form>
           </div>
         </div>
-      </div>
+      <!-- </div>
 
-    </div>
-  </div>
-</div>
+    </div> -->
+  <!-- </div>
+</div> -->
