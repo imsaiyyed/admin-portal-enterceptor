@@ -13,16 +13,16 @@ export const ROUTES: RouteInfo[] = [
     { path: '/company-details', title: 'Company Details',  icon:'person', class: '' },
     { path: '/project-details', title: 'Project Details',  icon:'person', class: '' },
     { path: '/account-details', title: 'Account Details',  icon:'person', class: '' },
-    { path: '/client-details', title: 'Client Details',  icon:'person', class: '' },
+    { path: '/client-details', title: 'Contact Details',  icon:'person', class: '' },
     { path: '/employee-details', title: 'Employee Details',  icon:'person', class: '' },
-    { path: '/project-account', title: 'Project Account',  icon:'person', class: '' },
+    // { path: '/project-account', title: 'Project Account',  icon:'person', class: '' },
 
-    { path: '/table-list', title: 'Table List',  icon:'content_paste', class: '' },
-    { path: '/typography', title: 'Typography',  icon:'library_books', class: '' },
-    { path: '/icons', title: 'Icons',  icon:'bubble_chart', class: '' },
-    { path: '/maps', title: 'Maps',  icon:'location_on', class: '' },
-    { path: '/notifications', title: 'Notifications',  icon:'notifications', class: '' },
-    { path: '/upgrade', title: 'Upgrade to PRO',  icon:'unarchive', class: 'active-pro' },
+    // { path: '/table-list', title: 'Table List',  icon:'content_paste', class: '' },
+    // { path: '/typography', title: 'Typography',  icon:'library_books', class: '' },
+    // { path: '/icons', title: 'Icons',  icon:'bubble_chart', class: '' },
+    // { path: '/maps', title: 'Maps',  icon:'location_on', class: '' },
+    // { path: '/notifications', title: 'Notifications',  icon:'notifications', class: '' },
+    // { path: '/upgrade', title: 'Upgrade to PRO',  icon:'unarchive', class: 'active-pro' },
 ];
 
 @Component({

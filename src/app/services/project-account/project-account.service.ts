@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpResponse, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { AccountDetailsService } from "../account-service/account-details.service";
-import { ProjectDetailsService } from "../project-service/project-details.service";
 import { ProjectAccountMap } from "../../models/ProjectAccountMap";
 
 @Injectable({

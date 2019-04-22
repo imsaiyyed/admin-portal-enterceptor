@@ -18,6 +18,7 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { CerateProjectAccountMapComponent } from "../cerate-project-account-map/cerate-project-account-map.component";
 import { CreateClientComponent } from "../create-client/create-client.component";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { CreateProjectClientMapComponent } from "../create-project-client-map/create-project-client-map.component";
 
 @Component({
   selector: "app-project-profile",
@@ -113,11 +114,22 @@ export class ProjectProfileComponent implements OnInit {
       "StartDate",
       "EndDate",
       "client",
-      "edit"
+      // "edit"
     ];
   }
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  linkContact(accountId:number) {
+    let dialogRef=this.dialog.open(CreateProjectClientMapComponent, {
+      width: '600px',
+      data: {ProjectId:this.project.ProjectId,AccountId:accountId}
+    });
 
-  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 
   linkAccount() {
     let dialogRef=this.dialog.open(CerateProjectAccountMapComponent, {

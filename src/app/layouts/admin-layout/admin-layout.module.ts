@@ -49,6 +49,9 @@ import { ProjectAccountMappingComponent } from '../../project-account-mapping/pr
 import { CerateProjectAccountMapComponent } from '../../cerate-project-account-map/cerate-project-account-map.component';
 import { ProjectProfileComponent } from '../../project-profile/project-profile.component';
 import { CreateProjectClientMapComponent } from '../../create-project-client-map/create-project-client-map.component';
+import { EmployeeProfileComponent } from '../../employee-profile/employee-profile.component';
+import { CreateProjectEmployeeMapComponent } from '../../create-project-employee-map/create-project-employee-map.component';
+import { AccountProfileComponent } from '../../account-profile/account-profile.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: 'red',
@@ -103,7 +106,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ProjectAccountMappingComponent,
     CerateProjectAccountMapComponent,
     CreateProjectClientMapComponent,
-    ProjectProfileComponent
+    CreateProjectEmployeeMapComponent,
+    ProjectProfileComponent,
+    EmployeeProfileComponent,
+    AccountProfileComponent
   ],
   providers:[
   ],

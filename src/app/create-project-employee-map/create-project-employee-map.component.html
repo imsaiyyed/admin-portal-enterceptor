@@ -1,0 +1,91 @@
+<!-- <div class="main-content">
+  <div class="container-fluid"> -->
+    <!-- <div class="row customClass">
+      <div class="col-md-12 customClass"> -->
+          <div class="card cardClass">
+              <div class="card-header card-header-danger">
+                <h4 class="card-title">Employee Profile</h4>
+                <p class="card-category">Complete project details</p>
+              </div>
+              <div class="card-body">
+                <form [formGroup]="projectEmployeeDetails" >
+                  <div class="row">
+                      <div class="col-md-5">
+                          <mat-form-field>
+                            <mat-label>Employee</mat-label>
+                            <mat-select [disabled]="true" formControlName="EmployeeId">
+                              <mat-option [value]="employee.Id" *ngFor="let employee of employees">
+                                {{employee.FirstName+' '+ employee.LastName}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                    <div class="col-md-5">
+                      <mat-form-field>
+                        <mat-label>Project</mat-label>
+                        <mat-select  formControlName="ProjectId">
+                          <mat-option [value]="project.ProjectId" *ngFor="let project of projects">
+                            {{project.ProjectTitle}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    
+                  </div>
+                  <div class="row">
+                    <div class="col-md-5">
+                      <mat-form-field>
+                        <input matInput type="date" placeholder="Start Date of Service" formControlName="StartDate">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-5">
+                      <mat-form-field>
+                        <input matInput type="date" placeholder="End Date of Service" formControlName="EndDate">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                 
+                  <div class="row">
+                      <div class="col-md-5">
+                          <mat-form-field>
+                            <mat-label>Manager </mat-label>
+                            <mat-select formControlName="ManagerId">
+                              <mat-option [value]="employee.Id" *ngFor="let employee of employees">
+                                {{employee.FirstName+' '+ employee.LastName}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                    <div class="col-md-3">
+                      <mat-form-field>
+                        <mat-label>Service Status</mat-label>
+                        <mat-select [disabled]="!isEdit" formControlName="IsActive">
+                          <mat-option selected="selected" [value]="true">
+                            Active
+                          </mat-option>
+                          <mat-option [value]="false">
+                            In-Active
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row  ">
+                      <div class="col-md-6">
+                      </div>
+                      <div class="col-md-3">
+                  <button mat-raised-button  (click)="onSubmit()" class="btn btn-danger pull-right">Save Details</button>
+                  </div>
+                  <div class="col-md-3">
+                      <button mat-raised-button  (click)="closeDialog()" class="btn btn-danger pull-right">Cancel</button>
+                      </div>
+                  </div>
+                  <div class="clearfix"></div>
+                </form>
+              </div>
+            </div>
+          <!-- </div>
+    
+        </div> -->
+      <!-- </div>
+    </div> -->

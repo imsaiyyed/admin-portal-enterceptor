@@ -129,6 +129,7 @@ export class CerateProjectAccountMapComponent implements OnInit {
                 "/project-details/project-profile/",
                 this.projectaccountMap.ProjectId
               ]);
+              this.dialogRef.close();
             }
           }
         );

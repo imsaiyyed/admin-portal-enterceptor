@@ -1,19 +1,19 @@
-<div class="main-content">
+<!-- <div class="main-content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-8">
-          <div class="card">
+        <div class="col-md-8"> -->
+          <div class="card cardClass">
             <div class="card-header card-header-danger">
-              <h4 class="card-title">Edit Profile</h4>
-              <p class="card-category">Complete your profile</p>
+              <h4 class="card-title">Project Profile</h4>
+              <p class="card-category">Contact Details</p>
             </div>
             <div class="card-body">
-              <form [formGroup]="projectClientDetails" (ngSubmit)="onSubmit()">
+              <form [formGroup]="projectClientDetails" >
                 <div class="row">
                   <div class="col-md-5">
                     <mat-form-field>
                       <mat-label>Project</mat-label>
-                      <mat-select [disabled]="true" formControlName="ProjectId">
+                      <mat-select [disabled]="isProjectDisabled" formControlName="ProjectId">
                         <mat-option [value]="project.ProjectId" *ngFor="let project of projects">
                           {{project.ProjectTitle}}
                         </mat-option>
@@ -35,7 +35,7 @@
                     <div class="col-md-5">
                         <mat-form-field>
                           <mat-label>Client</mat-label>
-                          <mat-select formControlName="ClientId">
+                          <mat-select  [disabled]="isClientDisabled"  formControlName="ClientId">
                             <mat-option [value]="client.Id" *ngFor="let client of clients">
                               {{client.ClientName}}
                             </mat-option>
@@ -70,15 +70,23 @@
                 </div>
          
              
+                <div class="row  ">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-3">
+                <button mat-raised-button  (click)="onSubmit()" class="btn btn-danger pull-right">Save Details</button>
+                </div>
+                <div class="col-md-3">
+                    <button mat-raised-button  (click)="closeDialog()" class="btn btn-danger pull-right">Cancel</button>
+                    </div>
+                </div>
   
-  
-                <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save Details</button>
                 <div class="clearfix"></div>
               </form>
             </div>
           </div>
-        </div>
+        <!-- </div>
   
       </div>
     </div>
-  </div>
+  </div> -->
