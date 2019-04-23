@@ -37,7 +37,7 @@ export class EmployeeDetailsService {
     return this.http.post('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/Employees',{...emplyee,AllowMonitoring:allowMonitoring});
 }
 
-updateClient(employee:EmployeeDetails){
+updateEmployee(employee:EmployeeDetails){
   console.log('Update',employee)
   let isActive=0;
   if(employee['IsActive']){
@@ -50,7 +50,7 @@ updateClient(employee:EmployeeDetails){
   return this.http.put('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/Employees',{...employee,AllowMonitoring:allowMonitoring,IsActive:isActive});
 }
 
-deleteClient(employee:EmployeeDetails){
+deleteEmployee(employee:EmployeeDetails){
   console.log('Delete',employee)
   const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: {Id:employee['Id']}

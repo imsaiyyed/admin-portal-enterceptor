@@ -92,7 +92,7 @@ export class ProjectProfileComponent implements OnInit {
       }
     
 
-    this.projectAccountService.initClients().subscribe(resp => {
+    this.projectAccountService.initMaaping().subscribe(resp => {
       this.projectAccountService.PROJECT_ACCOUNT_DATA = resp.body;
       let tempdata = this.projectAccountService.PROJECT_ACCOUNT_DATA;
 
@@ -139,7 +139,7 @@ export class ProjectProfileComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.projectAccountService.initClients().subscribe(resp => {
+      this.projectAccountService.initMaaping().subscribe(resp => {
         this.projectAccountService.PROJECT_ACCOUNT_DATA = resp.body;
         let tempdata = this.projectAccountService.PROJECT_ACCOUNT_DATA;
         this.filteredData=new Array<ProjectAccountMap>();

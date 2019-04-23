@@ -49,7 +49,7 @@ export class CreateClientComponent implements OnInit {
         AllowMonitoring:[true,[Validators.required]],
         Designation:["",[Validators.required]],
         Influence:[0,[Validators.required]],
-        AccountId:[0,[Validators.required]],
+        AccountId:[this.accountDetailsService.getAccountId(),[Validators.required]],
         IsActive:[true]
       });
     } else {

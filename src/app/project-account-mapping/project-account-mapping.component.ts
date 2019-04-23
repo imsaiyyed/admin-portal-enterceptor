@@ -19,7 +19,7 @@ export class ProjectAccountMappingComponent implements OnInit {
   constructor(private projectAccountService:ProjectAccountService) { }
 
   ngOnInit() {
-    this.projectAccountService.initClients().subscribe((resp)=>{
+    this.projectAccountService.initMaaping().subscribe((resp)=>{
       this.projectAccountService.PROJECT_ACCOUNT_DATA=resp.body;
       this.dataSource = new MatTableDataSource<ProjectAccountMap>(this.projectAccountService.PROJECT_ACCOUNT_DATA);
       this.dataSource.paginator = this.paginator;

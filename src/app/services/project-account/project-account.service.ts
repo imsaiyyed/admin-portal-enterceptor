@@ -11,7 +11,7 @@ export class ProjectAccountService {
   PROJECT_ACCOUNT_DATA:ProjectAccountMap[];
   constructor(private http: HttpClient) {}
   
-  initClients():Observable<HttpResponse<ProjectAccountMap[]>>{ 
+  initMaaping():Observable<HttpResponse<ProjectAccountMap[]>>{ 
     return this.http.get<ProjectAccountMap[]>('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ProjectAccountMap?UserId=1', { observe: 'response' });
   }
 

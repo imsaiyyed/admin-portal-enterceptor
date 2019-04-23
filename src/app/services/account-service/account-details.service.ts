@@ -7,7 +7,8 @@ import { HttpResponse, HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AccountDetailsService {
-
+  
+  public accountId:number=0;
   public ACCOUNT_DATA:AccountDetails[];
   constructor(private http: HttpClient) { }
 
@@ -50,5 +51,12 @@ export class AccountDetailsService {
     });
     let index=this.ACCOUNT_DATA.indexOf(account);
     this.ACCOUNT_DATA.splice(index,1);
+  }
+
+  getAccountId():number{
+    return this.accountId;
+  }
+  setAccountId(id:number){
+    this.accountId=id;
   }
 }

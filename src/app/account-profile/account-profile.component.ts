@@ -79,6 +79,10 @@ export class AccountProfileComponent implements OnInit {
 
     this.displayedColumns= ['Id','ClientEmail', 'Designation','ClientName','IsActive','edit','delete','project'];
   }
+  addContact(){
+    this.accountDetailsService.setAccountId(parseInt(this.route.snapshot.paramMap.get("accountId")));
+    this.router.navigate(['/client-details/create-client',0]);
+  }
   linkProject(client){
     let dialogRef=this.dialog.open(CreateProjectClientMapComponent, {
       width: '600px',

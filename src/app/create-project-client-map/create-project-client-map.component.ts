@@ -12,6 +12,7 @@ import { EmployeeDetailsService } from "../services/employee-service/employee-de
 import { ProjectClientService } from "../services/project-client/project-client.service";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { ProjectAccountMap } from "../models/ProjectAccountMap";
+import { ProjectClientMap } from "../models/ProjectClientMap";
 
 @Component({
   selector: "app-create-project-client-map",
@@ -19,10 +20,12 @@ import { ProjectAccountMap } from "../models/ProjectAccountMap";
   styleUrls: ["./create-project-client-map.component.css"]
 })
 export class CreateProjectClientMapComponent implements OnInit {
-  projects: ProjectDetails[];
+  projects = new Array<ProjectDetails>();
   accounts: AccountDetails[];
   clients = new Array<ClientDetails>();
   projectAccountDetails:ProjectAccountMap[];
+  projectClientMap:ProjectClientMap[];
+
   projectClientDetails = this.fb.group({});
   client: ClientDetails;
   isEdit = false;
@@ -42,7 +45,7 @@ export class CreateProjectClientMapComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    let tempData: ClientDetails[];
+    let tempData:ClientDetails[];
     // let projectId = parseInt(this.route.snapshot.paramMap.get("projectId"));
     // let accountId = parseInt(this.route.snapshot.paramMap.get("accountId"));
     this.client=this.data['Client'];
@@ -51,15 +54,20 @@ export class CreateProjectClientMapComponent implements OnInit {
       this.isClientDisabled=true;
       console.log(this.client)
 
-      this.projectAccountService.initClients().subscribe((resp)=>{
+      this.projectClientService.initMapping().subscribe((resp)=>{
+        this.projectClientMap=resp.body;
+      });
+
+      this.projectAccountService.initMaaping().subscribe((resp)=>{
         this.projectAccountDetails=resp.body;
         this.projectDetailsService.initProjects().subscribe(resp => {
           this.projectDetailsService.PROJECT_DATA = resp.body;
-          let tempData=resp.body;
-          // tempData.forEach(project => {
-          //   if(project.)
-          // });
-          this.projects = resp.body;
+
+          this.projectAccountDetails.forEach((projectAccount,index)=>{
+            if(projectAccount.AccountId==this.client.AccountId){
+              this.projects.push(this.projectDetailsService.getProject(projectAccount.ProjectId));
+            }
+          });
         });
       }); 
 

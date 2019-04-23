@@ -176,7 +176,7 @@ export class EmployeeProfileComponent implements OnInit {
         );
     } else {
       this.employeeDetailsService
-        .updateClient(this.employeeDetails.value)
+        .updateEmployee(this.employeeDetails.value)
         .subscribe(
           resp => {
             console.log(resp);

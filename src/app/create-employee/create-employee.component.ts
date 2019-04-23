@@ -70,7 +70,7 @@ export class CreateEmployeeComponent implements OnInit {
       });
     }
     else{
-      this.employeeDetailsService.updateClient(this.employeeDetails.value).subscribe((resp)=>{
+      this.employeeDetailsService.updateEmployee(this.employeeDetails.value).subscribe((resp)=>{
         console.log(resp);
       },(error)=>{
         console.log('Erro',error);

@@ -34,7 +34,7 @@ export class EmployeeDetailsComponent implements OnInit {
   }
   deleteEmployee(employee:EmployeeDetails){
 
-    this.employeeDetailsService.deleteClient(employee);
+    this.employeeDetailsService.deleteEmployee(employee);
     this.dataSource=new MatTableDataSource<EmployeeDetails>(this.employeeDetailsService.EMPLOYEE_DATA);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

@@ -12,7 +12,7 @@ export class ProjectClientService {
   PROJECT_CLIENT_DATA:ProjectClientMap[];
   constructor(private http: HttpClient) {}
   
-  initClients():Observable<HttpResponse<ProjectClientMap[]>>{ 
+  initMapping():Observable<HttpResponse<ProjectClientMap[]>>{ 
     return this.http.get<ProjectClientMap[]>('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ProjectClientMap?UserId=1', { observe: 'response' });
   }
 
