@@ -1,0 +1,141 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <div class="row">
+              <div class="col-md-3">
+                <h4 class="card-title ">Account Details</h4>
+                <!-- <p class="card-category">Here is a subtitle for this table</p> -->
+              </div>
+              <div class="col-md-5"></div>
+              <div class="col-md-2"></div>
+              <div class="col-md-2">
+                <mat-form-field>
+                  <input mat-raised-button matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                </mat-form-field>
+              </div>
+              <!-- <div class="col-md-2">
+                <a mat-raised-button [routerLink]="['/account-details/create-account', 0]">Add
+                  Account</a>
+              </div> -->
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="select">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                    </mat-checkbox>
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                    </mat-checkbox>
+                  </td>
+                </ng-container>
+                <!-- channelName Column -->
+                <ng-container matColumnDef="channelName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Channel Name</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.Channel_Name }}
+                  </td>
+                </ng-container>
+
+        
+
+             
+
+
+                <!-- isActive Column -->
+                <ng-container matColumnDef="isActive">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Active Status</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.IsActive }}
+                  </td>
+                </ng-container>
+
+                <!-- configuration Column -->
+                <ng-container matColumnDef="configuration">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Configuration</th>
+                  <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="accent"
+                      [routerLink]="['.']">
+                      <button (click)="changeConfig(element)" mat-raised-button color="primary">Configuration</button>
+                    </button>
+                  </td>
+                </ng-container>
+                  <!-- credentials Column -->
+                  <ng-container matColumnDef="credentials">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Credentials</th>
+                      <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button color="accent"
+                          [routerLink]="['.']">
+                          <button mat-raised-button color="accent">Credentials</button>
+                          </button>
+                      </td>
+                    </ng-container>
+                <!-- delete Column -->
+                <!-- <ng-container matColumnDef="delete">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Delete</th>
+                  <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="danger" (click)="deleteAccount(element)">
+                      <mat-icon aria-label="Edit">delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container> -->
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+
+              <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row">
+          <div class="col-md-8">
+              <div class="card">
+                  <div class="card-header card-header-danger">
+                      <h4 class="card-title">Edit Profile</h4>
+                      <p class="card-category">Complete your profile</p>
+                  </div>
+                  <div class="card-body">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-5">
+                            <mat-form-field>
+                              <mat-label>Channel</mat-label>
+                              <mat-select name="Channel" (ngModelChange)="onChannelChange($event)" [ngModel]="channelId" >-->
+                                  <!-- formControlName="ChannelId" -->
+    <!-- <mat-option [value]="channel.Id" *ngFor="let channel of channels">
+      {{channel.Channel_Name}}
+    </mat-option>
+    </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-md-5">
+
+    <span *ngFor="let cc of channelConfigurations">
+      <span *ngIf="cc.ChannelId == channelId">
+        <option [ngValue]="h">{{cc.Key}} </option>
+      </span>
+    </span>
+  </div>
+</div>
+<button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button>
+<div class="clearfix"></div>
+</form>
+</div>
+</div>
+</div>
+
+</div>  -->
+</div>
+</div>

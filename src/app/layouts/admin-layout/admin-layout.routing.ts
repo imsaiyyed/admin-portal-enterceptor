@@ -24,6 +24,8 @@ import { CreateProjectClientMapComponent } from "../../create-project-client-map
 import { EmployeeProfileComponent } from "../../employee-profile/employee-profile.component";
 import { CreateProjectEmployeeMapComponent } from "../../create-project-employee-map/create-project-employee-map.component";
 import { AccountProfileComponent } from "../../account-profile/account-profile.component";
+import { ChannelConfigurationComponent } from "../../channel-configuration/channel-configuration.component";
+import { ChannelCredentialsComponent } from "../../channel-credentials/channel-credentials.component";
 
 export const AdminLayoutRoutes: Routes = [
   // {
@@ -82,7 +84,10 @@ export const AdminLayoutRoutes: Routes = [
     path: "project-details/create-project/:projectId",
     component: CreateProjectComponent
   },
-  { path: "project-details/project-profile/:projectId", component: ProjectProfileComponent },
+  {
+    path: "project-details/project-profile/:projectId",
+    component: ProjectProfileComponent
+  },
 
   { path: "account-details", component: AccountDetailsComponent },
   {
@@ -93,15 +98,46 @@ export const AdminLayoutRoutes: Routes = [
     path: "account-details/account-profile/:accountId",
     component: AccountProfileComponent
   },
+
   { path: "client-details", component: ClientDetailsComponent },
-  {path:"client-details/create-client/:clientId",component:CreateClientComponent},
-  {path:"employee-details",component:EmployeeDetailsComponent},
-  {path:"employee-details/create-employee/:employeeId",component:CreateEmployeeComponent},
-  {path:"employee-details/employee-profile/:employeeId",component:EmployeeProfileComponent},
-  {path:"employee-details/create-mapping/:employeeId",component:CreateProjectEmployeeMapComponent},
+  {
+    path: "client-details/create-client/:clientId",
+    component: CreateClientComponent
+  },
 
-  {path:"project-account",component:ProjectAccountMappingComponent},
-  {path:"project-account/create-mapping/:id/:isEdit",component:CerateProjectAccountMapComponent},
-  {path:"project-client/create-mapping/:projectId/:accountId",component:CreateProjectClientMapComponent},
+  { path: "employee-details", component: EmployeeDetailsComponent },
+  {
+    path: "employee-details/create-employee/:employeeId",
+    component: CreateEmployeeComponent
+  },
+  {
+    path: "employee-details/employee-profile/:employeeId",
+    component: EmployeeProfileComponent
+  },
+  {
+    path: "employee-details/create-mapping/:employeeId",
+    component: CreateProjectEmployeeMapComponent
+  },
 
+  { path: "project-account", component: ProjectAccountMappingComponent },
+  {
+    path: "project-account/create-mapping/:id/:isEdit",
+    component: CerateProjectAccountMapComponent
+  },
+  {
+    path: "project-client/create-mapping/:projectId/:accountId",
+    component: CreateProjectClientMapComponent
+  },
+  {
+    path: "channel-configuration",
+    component: ChannelConfigurationComponent
+  },
+  {
+    path: "channel-credentials",
+    component: ChannelCredentialsComponent
+  },
+  // {
+  //   path: "channel-credentials",
+  //   component: ChannelCredentialsComponent
+  // }
 ];

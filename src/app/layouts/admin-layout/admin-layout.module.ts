@@ -38,6 +38,7 @@ import {
   MatCheckboxModule,
   MatSnackBarModule,
   MatDialogModule,
+  MatListModule,
   
 } from '@angular/material';
 import { CreateAccountComponent } from '../../create-account/create-account.component';
@@ -52,6 +53,9 @@ import { CreateProjectClientMapComponent } from '../../create-project-client-map
 import { EmployeeProfileComponent } from '../../employee-profile/employee-profile.component';
 import { CreateProjectEmployeeMapComponent } from '../../create-project-employee-map/create-project-employee-map.component';
 import { AccountProfileComponent } from '../../account-profile/account-profile.component';
+import { ChannelConfigurationComponent } from '../../channel-configuration/channel-configuration.component';
+import { ChannelCredentialsComponent } from '../../channel-credentials/channel-credentials.component';
+import { ChangeChannelConfigComponent } from '../../change-channel-config/change-channel-config.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: 'red',
@@ -83,6 +87,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatCheckboxModule,
     MatSnackBarModule,
     MatDialogModule,
+    MatListModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
   ],
   declarations: [
@@ -109,13 +114,20 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     CreateProjectEmployeeMapComponent,
     ProjectProfileComponent,
     EmployeeProfileComponent,
-    AccountProfileComponent
+    AccountProfileComponent,
+    ChannelConfigurationComponent,
+    ChannelCredentialsComponent,
+    ChangeChannelConfigComponent
   ],
   providers:[
   ],
   exports: [
     
     MatNativeDateModule,
+  ],
+  //For dynamically loaded components
+  entryComponents:[
+    ChangeChannelConfigComponent
   ]
 })
 
