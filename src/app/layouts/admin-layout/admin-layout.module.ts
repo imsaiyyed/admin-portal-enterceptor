@@ -56,6 +56,7 @@ import { AccountProfileComponent } from '../../account-profile/account-profile.c
 import { ChannelConfigurationComponent } from '../../channel-configuration/channel-configuration.component';
 import { ChannelCredentialsComponent } from '../../channel-credentials/channel-credentials.component';
 import { ChangeChannelConfigComponent } from '../../change-channel-config/change-channel-config.component';
+import { ChangeChannelCredsComponent } from '../../change-channel-creds/change-channel-creds.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: 'red',
@@ -117,7 +118,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     AccountProfileComponent,
     ChannelConfigurationComponent,
     ChannelCredentialsComponent,
-    ChangeChannelConfigComponent
+    ChangeChannelConfigComponent,
+    ChangeChannelCredsComponent
   ],
   providers:[
   ],
@@ -127,7 +129,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   ],
   //For dynamically loaded components
   entryComponents:[
-    ChangeChannelConfigComponent
+    ChangeChannelConfigComponent,
+    ChangeChannelCredsComponent
   ]
 })
 

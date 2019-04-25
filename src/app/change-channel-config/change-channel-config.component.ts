@@ -92,4 +92,7 @@ this.channelConfigurationService.CHANNEL_CONFIGURATION_DATA.forEach(
     });
 
   }
+  closeDialog(){
+    this.dialogRef.close();
+  }
 }

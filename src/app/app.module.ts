@@ -64,6 +64,7 @@ import { AccountProfileComponent } from './account-profile/account-profile.compo
 import { ChannelConfigurationComponent } from './channel-configuration/channel-configuration.component';
 import { ChannelCredentialsComponent } from './channel-credentials/channel-credentials.component';
 import { ChangeChannelConfigComponent } from './change-channel-config/change-channel-config.component';
+import { ChangeChannelCredsComponent } from './change-channel-creds/change-channel-creds.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -98,6 +99,7 @@ import { ChangeChannelConfigComponent } from './change-channel-config/change-cha
     AppComponent,
     AdminLayoutComponent,
     LoginComponent,
+    // ChangeChannelCredsComponent,
     // ChangeChannelConfigComponent,
     // ChannelCredentialsComponent,
     // ChannelConfigurationComponent,

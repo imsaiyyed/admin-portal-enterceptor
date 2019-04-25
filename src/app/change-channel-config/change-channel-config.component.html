@@ -28,6 +28,19 @@
               <!-- </div>
             </div> -->
             <div class="container-fluid topPadding">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>No.</label>
+            
+                      </div>
+                  <div class="col-md-6">
+                    <label>Key Name</label>
+        
+                  </div>
+                  <div class="col-md-3">
+                      <label>Action</label>
+                    </div>
+                </div>
       <div *ngFor="let config of channelConfigurations;let i = index">
         <div class="row">
             <div class="col-md-2">
@@ -42,6 +55,13 @@
             <mat-icon aria-label="Delete" (click)="deleteKey(config)">delete</mat-icon>
           </div>
         </div>
+        
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9"></div>
+    <div class="col-md-3">
+      <button mat-raised-button  (click)="closeDialog()" class="btn btn-danger pull-right">Cancel</button>
       </div>
     </div>
       <!-- <div class="row">

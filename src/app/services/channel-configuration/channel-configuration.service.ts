@@ -9,6 +9,8 @@ import { HttpResponse, HttpClient, HttpHeaders } from '@angular/common/http';
 export class ChannelConfigurationService {
 public CHANNEL_DATA:Channel[];
 public CHANNEL_CONFIGURATION_DATA:ChannelConfiguration[];
+public CHANNEL_CREDENTIAL_DATA:ChannelCredential[];
+
   constructor(private http: HttpClient) { }
 
 
@@ -30,8 +32,16 @@ public CHANNEL_CONFIGURATION_DATA:ChannelConfiguration[];
   initChannelConfigurations():Observable<HttpResponse<ChannelConfiguration[]>>{
      return this.http.get<ChannelConfiguration[]>('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ChannelConfigurationList', { observe: 'response' });
   }
+  initChannelCredentials():Observable<HttpResponse<ChannelCredential[]>>{
+    return this.http.get<ChannelCredential[]>('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ChannelCredentialList?UserId=1', { observe: 'response' });
+  }
   addNewKey(channelId:number,newKey:String){
     return this.http.post('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ChannelConfiguration',{ChannelId:channelId,Key:newKey});
+  }
+  saveKeyValue(creds:ChannelCredential,newKeyValue:String){
+    return this.http.put('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ChannelCredentials',{Id:creds.Id,ChannelId:creds.ChannelId,UserId:creds.UserId,KeyId:creds.KeyId,Value:newKeyValue}).subscribe((resp)=>{
+      console.log(resp);
+    });
   }
   deleteKey(key:ChannelConfiguration){
     const httpOptions = {
@@ -97,4 +107,13 @@ export class ChannelConfiguration{
   Id:number;
   ChannelId:number;
   Key:String;
+}
+export class ChannelCredential{
+  Id:number;
+  UserId:number;
+  ChannelId:number;
+  Channel_Name:String;
+  KeyId:number;
+  Key:String;
+  Value:String;
 }
