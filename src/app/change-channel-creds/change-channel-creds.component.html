@@ -6,7 +6,7 @@
     </div>
     <div class="container-fluid topPadding">
       <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-4">
           <mat-form-field>
             <mat-label>Keys</mat-label>
             <mat-select (ngModelChange)="onKeyChange($event)" [ngModel]="keyId">
@@ -15,20 +15,17 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <p>{{keyId}}</p>
         </div>
-
-      </div>
-      <div class="row">
-        <div class="col-md-5">
-          <mat-form-field>
-            <input matInput placeholder="Key value" [(ngModel)]="keyValue">
-          </mat-form-field>
-        </div>
-        <div class="col-md-5">
-            <button mat-raised-button  (click)="saveKeyValue()" color="warn">Save Changes</button>
+        <div class="col-md-4">
+            <mat-form-field>
+              <input matInput placeholder="Key value" [(ngModel)]="keyValue">
+            </mat-form-field>
           </div>
+          <div class="col-md-4">
+              <button mat-raised-button  (click)="saveKeyValue()" color="warn">Save Changes</button>
+            </div>
       </div>
+
     </div>
     <div class="container-fluid topPadding">
       <div class="row">
