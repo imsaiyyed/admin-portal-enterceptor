@@ -26,6 +26,10 @@ import { CreateProjectClientMapComponent } from "../create-project-client-map/cr
   styleUrls: ["./project-profile.component.css"]
 })
 export class ProjectProfileComponent implements OnInit {
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
   project: ProjectDetails;
   tags: Tag[] = [];
   projectDetails = this.fb.group({});

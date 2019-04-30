@@ -7,7 +7,7 @@ import { Router, ActivatedRoute, ParamMap } from "@angular/router";
 import { ProjectDetailsService } from "../services/project-service/project-details.service";
 import { ProjectDetails } from "../models/ProjectDetails";
 import {MatSnackBar} from '@angular/material';
-
+import {ValidateEndDate,ValidateStartDate} from '../validators/custom-validator';
 @Component({
   selector: "app-create-project",
   templateUrl: "./create-project.component.html",
@@ -21,7 +21,7 @@ export class CreateProjectComponent implements OnInit {
   isEdit=false;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   tags: Tag[] = [];
-  projectDetails ;
+  projectDetails=this.fb.group({}) ;
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -37,9 +37,9 @@ export class CreateProjectComponent implements OnInit {
         ProjectTitle: ["", [Validators.required]],
         UserId: [1],
         StartDate: ["", [Validators.required]],
-        EndDate: ["", [Validators.required]],
-        IsActive: ["", [Validators.required]],
-        Tags: ["", [Validators.required]]
+        EndDate: ["", [Validators.required,ValidateEndDate]],
+        IsActive: [true, [Validators.required]],
+        Tags: ["", []]
       });
     }
     else{
@@ -55,8 +55,9 @@ export class CreateProjectComponent implements OnInit {
         StartDate: [project.StartDate, [Validators.required]],
         EndDate: [project.EndDate, [Validators.required]],
         IsActive: [project.IsActive, [Validators.required]],
-        Tags: [project.Tags, [Validators.required]]
+        Tags: [project.Tags, []]
       });
+      
       let startDate=new Date(project.StartDate);
       let endDate=new Date(project.EndDate);
       
@@ -76,6 +77,8 @@ export class CreateProjectComponent implements OnInit {
     
   }
   onSubmit() {
+  
+    if(this.validateDate()){
     // TODO: Use EventEmitter with form value
     let projectId = parseInt(this.route.snapshot.paramMap.get('projectId'));
     if(projectId==0){
@@ -105,7 +108,10 @@ export class CreateProjectComponent implements OnInit {
         }
       });
     }
-    
+  }
+  else{
+    this.projectDetails.get('EndDate').setErrors({invalidEndDate: true });
+  }
     console.log();
   }
 
@@ -136,6 +142,23 @@ export class CreateProjectComponent implements OnInit {
     if (index >= 0) {
       this.tags.splice(index, 1);
     }
+  }
+  getErrorMessageEndDate(){
+    console.log(this.projectDetails.get('EndDate'));
+    return this.projectDetails.get('EndDate').hasError('required') ? 'You must enter a value' :
+    this.projectDetails.get('EndDate').hasError('invalidEndDate') ? 'End date must be greater htan start date' :
+        '';
+  }
+  validateDate():boolean{
+    if(this.projectDetails.get('StartDate').value<this.projectDetails.get('EndDate').value){
+      return true;
+    }
+    return false;
+  }
+  getErrorMessageStartDate(){
+    return this.projectDetails.get('StartDate').hasError('required') ? 'You must enter a value' :
+    this.projectDetails.get('StartDate').hasError('invalidStartDate') ? 'Not a valid date' :
+        '';
   }
   // onFileChange(event) {
   //   const reader = new FileReader();
