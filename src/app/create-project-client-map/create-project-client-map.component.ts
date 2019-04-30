@@ -13,6 +13,7 @@ import { ProjectClientService } from "../services/project-client/project-client.
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { ProjectAccountMap } from "../models/ProjectAccountMap";
 import { ProjectClientMap } from "../models/ProjectClientMap";
+import { ValidateStartDate, ValidateEndDate } from "../validators/custom-validator";
 
 @Component({
   selector: "app-create-project-client-map",
@@ -88,8 +89,8 @@ export class CreateProjectClientMapComponent implements OnInit {
       this.projectClientDetails = this.fb.group({
         Id: [0],
         UserId: [1],
-        StartDate: ["", Validators.required],
-        EndDate: ["", [Validators.required]],
+        StartDate: ["", [Validators.required,ValidateStartDate]],
+        EndDate: ["", [Validators.required,ValidateEndDate]],
         ProjectId: ["", [Validators.required]],
         AccountId: [this.client.AccountId, [Validators.required]],
         ClientId: [this.client.Id, Validators.required],
@@ -122,8 +123,8 @@ export class CreateProjectClientMapComponent implements OnInit {
     this.projectClientDetails = this.fb.group({
       Id: [0],
       UserId: [1],
-      StartDate: ["", Validators.required],
-      EndDate: ["", [Validators.required]],
+      StartDate: ["", [Validators.required,ValidateStartDate]],
+      EndDate: ["", [Validators.required,ValidateEndDate]],
       ProjectId: [projectId, [Validators.required]],
       AccountId: [accountId, [Validators.required]],
       ClientId: [0, Validators.required],
@@ -150,7 +151,12 @@ export class CreateProjectClientMapComponent implements OnInit {
         }
       );
   }
-
+  getErrorMessageEndDate(){
+    console.log(this.projectClientDetails.get('EndDate'));
+    return this.projectClientDetails.get('EndDate').hasError('required') ? 'You must enter a value' :
+    this.projectClientDetails.get('EndDate').hasError('invalidEndDate') ? 'End date must be greater htan start date' :
+        '';
+  }
   closeDialog() {
     this.dialogRef.close();
   }

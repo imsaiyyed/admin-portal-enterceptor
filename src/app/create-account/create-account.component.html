@@ -32,7 +32,7 @@
               </div>
 
               
-              <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save Details</button>
+              <button mat-raised-button type="submit" [disabled]="!accountDetails.valid"  class="btn btn-danger pull-right">Save Details</button>
               <div class="clearfix"></div>
             </form>
           </div>

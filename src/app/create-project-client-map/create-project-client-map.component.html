@@ -65,6 +65,7 @@
                   <div class="col-md-5">
                     <mat-form-field>
                       <input matInput type="date" placeholder="End Date of Service" formControlName="EndDate">
+                      <mat-error *ngIf="projectClientDetails.get('EndDate').invalid">{{getErrorMessageEndDate()}}</mat-error>
                     </mat-form-field>
                   </div>
                 </div>
@@ -74,7 +75,7 @@
                     <div class="col-md-6">
                     </div>
                     <div class="col-md-3">
-                <button mat-raised-button  (click)="onSubmit()" class="btn btn-danger pull-right">Save Details</button>
+                <button mat-raised-button  [disabled]="!projectClientDetails.valid" (click)="onSubmit()" class="btn btn-danger pull-right">Save Details</button>
                 </div>
                 <div class="col-md-3">
                     <button mat-raised-button  (click)="closeDialog()" class="btn btn-danger pull-right">Cancel</button>

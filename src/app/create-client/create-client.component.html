@@ -13,11 +13,15 @@
                 <div class="col-md-5">
                   <mat-form-field class="example-full-width">
                     <input matInput placeholder="Client name" formControlName="ClientName" type="text">
+                    <mat-error *ngIf="clientDetails.get('ClientName').invalid">{{getErrorMessage('ClientName')}}</mat-error>
+
                   </mat-form-field>
                 </div>
                 <div class="col-md-5">
                   <mat-form-field class="example-full-width">
                     <input matInput placeholder="Client Email" formControlName="ClientEmail" type="text">
+                    <mat-error *ngIf="clientDetails.get('ClientEmail').invalid">{{getErrorMessage('ClientEmail')}}</mat-error>
+
                   </mat-form-field>
                 </div>
               </div>
@@ -25,6 +29,8 @@
                 <div class="col-md-5">
                   <mat-form-field class="example-full-width">
                     <input matInput placeholder="Client Designation" formControlName="Designation" type="text">
+                    <mat-error *ngIf="clientDetails.get('Designation').invalid">{{getErrorMessage('Designation')}}</mat-error>
+
                   </mat-form-field>
                 </div>
                 <div class="col-md-5">
@@ -47,6 +53,8 @@
                             {{influenceObj.Title}}
                           </mat-option>
                         </mat-select>
+                        <mat-error *ngIf="clientDetails.get('Influence').invalid">{{getErrorMessage('Influence')}}</mat-error>
+
                       </mat-form-field>
                     </div>
                 <div class="col-md-5">
@@ -71,7 +79,7 @@
           </div>
 
 
-          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save Details</button>
+          <button mat-raised-button type="submit" [disabled]="!clientDetails.valid" class="btn btn-danger pull-right">Save Details</button>
           <div class="clearfix"></div>
           </form>
         </div>

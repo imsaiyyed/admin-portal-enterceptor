@@ -11,8 +11,6 @@ export function ValidateContactNumber(control: AbstractControl) {
 
 // Validator to start date and end date
 export function ValidateEndDate(control: AbstractControl) {
-    
-    console.log(control);
     if(control.value!='' && control.parent.get('StartDate').value!=''){
     if(control.parent.get('StartDate').value<control.value){
         return null;
@@ -23,13 +21,43 @@ export function ValidateEndDate(control: AbstractControl) {
 }
 
 // Validator to start date and end date
+export function validateDate(startDate,endDate):boolean{
+    if(startDate<endDate){
+      return true;
+    }
+    return false;
+  }
 export function ValidateStartDate(control: AbstractControl) {
-    console.log(control);
     if(control.value!='' &&control.parent.get('EndDate').value!=''){
     if(control.parent.get('EndDate').value>control.value){
+        control.parent.get('EndDate').setErrors(null);
+        return null;
+    }else{
+        control.parent.get('EndDate').setErrors({invalidEndDate:true});
+        return null;
+    }
+    }else{
+        return null;
+    }
+}
+
+export function ValidateSDate(control: AbstractControl) {
+    if(control.value>control.parent.get('EndDate').value){
+        return null;
+    }else{
+        return null;
+    }
+}
+// Validator to renewal date
+export function ValidateRenewalDate(control: AbstractControl) {
+    if(control.value!='' && control.parent.get('EndDate').value!=''){
+    if(control.parent.get('EndDate').value<control.value){
+        console.log('ValidateRenewalDate',control);
         return null;
     }
     else{
-        return { invalidStartDate: true };
-    }}
+        return { invalidRenewalDate: true };
+    }}else{
+        return null;
+    }
 }

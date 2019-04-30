@@ -9,7 +9,13 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
 import { ProjectAccountMap } from "../models/ProjectAccountMap";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-
+import {
+  ValidateEndDate,
+  validateDate,
+  ValidateRenewalDate,
+  ValidateStartDate,
+  ValidateSDate
+} from "../validators/custom-validator";
 @Component({
   selector: "app-cerate-project-account-map",
   templateUrl: "./cerate-project-account-map.component.html",
@@ -88,9 +94,9 @@ export class CerateProjectAccountMapComponent implements OnInit {
         Id: [0],
         UserId: [1],
         StartDate: ["", Validators.required],
-        EndDate: ["", [Validators.required]],
+        EndDate: ["", [Validators.required,ValidateEndDate]],
         Renewable: [true, [Validators.required]],
-        RenewalDate: ["", [Validators.required]],
+        RenewalDate: ["", [Validators.required,ValidateRenewalDate]],
         ProjectId: [projectId, [Validators.required]],
         AccountId: [0, [Validators.required]],
         IsActive: [true]
@@ -109,31 +115,22 @@ export class CerateProjectAccountMapComponent implements OnInit {
         this.projectAccountDetails.get("RenewalDate").enable();
       }
     });
+
+    this.projectAccountDetails.get("StartDate").valueChanges.subscribe(val => {
+      console.log(val);
+      if(this.projectAccountDetails.get("EndDate").value!=''){
+      if(!validateDate(val,this.projectAccountDetails.get("EndDate").value)){
+        this.projectAccountDetails.get('EndDate').setErrors({invalidEndDate:true});
+      }else{
+        this.projectAccountDetails.get('EndDate').setErrors(null);
+      }
+      }
+    });
   }
 
   onSubmit() {
-    if (this.isEdit) {
-      this.projectAccountService
-        .updateMapping(this.projectAccountDetails.value)
-        .subscribe(
-          resp => {
-            console.log(resp);
-          },
-          error => {
-            console.log("Erro", error);
-            if (error.statusText == "Created") {
-              this.snackBar.open("Record updated successfully...", "Ok", {
-                duration: 3000
-              });
-              this.router.navigate([
-                "/project-details/project-profile/",
-                this.projectaccountMap.ProjectId
-              ]);
-              this.dialogRef.close();
-            }
-          }
-        );
-    } else {
+    console.log(this.projectAccountDetails)
+    // if(validateDate(this.projectAccountDetails.get('StartDate'),this.projectAccountDetails.get('EndDate'))){
       let id = this.data['ProjectId'];
       console.log(this.projectAccountDetails.value);
       this.projectAccountService
@@ -153,7 +150,64 @@ export class CerateProjectAccountMapComponent implements OnInit {
             }
           }
         );
-    }
+    // }else{
+    //   this.projectAccountDetails.get('EndDate').setErrors({invalidEndDate: true });
+
+    // }
+    // if (this.isEdit) {
+    //   this.projectAccountService
+    //     .updateMapping(this.projectAccountDetails.value)
+    //     .subscribe(
+    //       resp => {
+    //         console.log(resp);
+    //       },
+    //       error => {
+    //         console.log("Erro", error);
+    //         if (error.statusText == "Created") {
+    //           this.snackBar.open("Record updated successfully...", "Ok", {
+    //             duration: 3000
+    //           });
+    //           this.router.navigate([
+    //             "/project-details/project-profile/",
+    //             this.projectaccountMap.ProjectId
+    //           ]);
+    //           this.dialogRef.close();
+    //         }
+    //       }
+    //     );
+    // } else {
+    //   let id = this.data['ProjectId'];
+    //   console.log(this.projectAccountDetails.value);
+    //   this.projectAccountService
+    //     .addMapping(this.projectAccountDetails.value)
+    //     .subscribe(
+    //       resp => {
+    //         console.log(resp);
+    //       },
+    //       error => {
+    //         console.log("Erro", error);
+    //         if (error.statusText == "Created") {
+    //           this.snackBar.open("Record added successfully...", "Ok", {
+    //             duration: 3000
+    //           });
+    //           this.router.navigate(["/project-details/project-profile/", id]);
+    //           this.dialogRef.close();
+    //         }
+    //       }
+    //     );
+    // }
+  }
+  getErrorMessageEndDate(){
+    console.log(this.projectAccountDetails.get('EndDate'));
+    return this.projectAccountDetails.get('EndDate').hasError('required') ? 'You must enter a value' :
+    this.projectAccountDetails.get('EndDate').hasError('invalidEndDate') ? 'End date must be greater htan start date' :
+        '';
+  }
+  getErrorMessageRenewalDate(){
+    console.log(this.projectAccountDetails.get('RenewalDate'));
+    return this.projectAccountDetails.get('RenewalDate').hasError('required') ? 'You must enter a value' :
+    this.projectAccountDetails.get('RenewalDate').hasError('invalidRenewalDate') ? 'Renewal Datemust be greater htan end date' :
+        '';
   }
   closeDialog(){
     this.dialogRef.close();

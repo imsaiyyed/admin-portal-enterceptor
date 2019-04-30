@@ -31,7 +31,7 @@ export class CreateEmployeeComponent implements OnInit {
         FirstName: ["", [Validators.required]],
         LastName: ["", [Validators.required]],
         UserId: [1],
-        Email: ["",Validators.required],
+        Email: ["",[Validators.required,Validators.email]],
         AllowMonitoring:[true,[Validators.required]],
         Designation:["",[Validators.required]],
         IsActive:[true]
@@ -44,7 +44,7 @@ export class CreateEmployeeComponent implements OnInit {
         FirstName: [employee.FirstName, [Validators.required]],
         LastName: [employee.LastName, [Validators.required]],
         UserId: [1],
-        Email: [employee.Email,Validators.required],
+        Email: [employee.Email,[Validators.required,Validators.email]],
         AllowMonitoring:[employee.AllowMonitoring,[Validators.required]],
         Designation:[employee.Designation,[Validators.required]],
         IsActive:[employee.IsActive]
@@ -83,5 +83,9 @@ export class CreateEmployeeComponent implements OnInit {
       });  
     }
   }
-
+  getErrorMessage(formControlName){
+    return this.employeeDetails.get(formControlName).hasError('required') ? 'You must enter a value' :
+    this.employeeDetails.get(formControlName).hasError('email') ? 'Please enter valid email id' :
+        '';
+  }
 }

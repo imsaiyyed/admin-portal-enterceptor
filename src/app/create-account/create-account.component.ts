@@ -32,7 +32,7 @@ export class CreateAccountComponent implements OnInit {
         AccountId:[0],
         AccountName: ["", [Validators.required]],
         UserId: [1],
-        IsActive: ["",Validators.required]
+        IsActive: [true,Validators.required]
       });
     } else {
       this.isEdit=true;

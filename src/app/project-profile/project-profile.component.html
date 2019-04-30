@@ -37,6 +37,8 @@
                 <div class="col-md-4 ">
                   <mat-form-field>
                     <input matInput type="date" placeholder="End Date of project" formControlName="EndDate">
+                    <mat-error *ngIf="projectDetails.get('EndDate').invalid">{{getErrorMessageEndDate()}}</mat-error>
+
                   </mat-form-field>
                   <!-- <mat-form-field class="example-full-width">
                           <input matInput placeholder="End Date" formControlName="endDate" type="email"> -->
@@ -85,7 +87,7 @@
                 <div class="col-md-6">
                 </div>
                 <div class="col-md-3">
-                  <button mat-raised-button type="submit" (click)="onSubmit()" class="btn btn-danger pull-right">Save Changes</button>
+                  <button mat-raised-button type="submit" [disabled]="!projectDetails.valid" (click)="onSubmit()" class="btn btn-danger pull-right">Save Changes</button>
                   </div>
                   <div class="col-md-3">
                   <button mat-raised-button (click)="linkAccount()" class="btn btn-danger pull-right">Link

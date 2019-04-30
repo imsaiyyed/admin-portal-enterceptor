@@ -16,9 +16,13 @@ import { ProjectAccountMap } from "../models/ProjectAccountMap";
 import { ProjectAccountService } from "../services/project-account/project-account.service";
 import { FormBuilder, Validators } from "@angular/forms";
 import { CerateProjectAccountMapComponent } from "../cerate-project-account-map/cerate-project-account-map.component";
-import { CreateClientComponent } from "../create-client/create-client.component";
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { CreateProjectClientMapComponent } from "../create-project-client-map/create-project-client-map.component";
+import {
+  ValidateEndDate,
+  validateDate,
+  ValidateStartDate
+} from "../validators/custom-validator";
 
 @Component({
   selector: "app-project-profile",
@@ -36,7 +40,7 @@ export class ProjectProfileComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   projectAccountDetails;
-    
+
   filteredData = new Array<ProjectAccountMap>();
   displayedColumns: string[];
   dataSource = new MatTableDataSource<ProjectAccountMap>();
@@ -76,7 +80,7 @@ export class ProjectProfileComponent implements OnInit {
       StartDate: [this.project.StartDate, [Validators.required]],
       EndDate: [this.project.EndDate, [Validators.required]],
       IsActive: [this.project.IsActive, [Validators.required]],
-      Tags: [this.project.Tags, [Validators.required]]
+      Tags: [this.project.Tags, []]
     });
     let startDate = new Date(this.project.StartDate);
     let endDate = new Date(this.project.EndDate);
@@ -84,17 +88,20 @@ export class ProjectProfileComponent implements OnInit {
     this.projectDetails
       .get("StartDate")
       .setValue(startDate.toISOString().slice(0, 10));
+      this.projectDetails
+      .get("StartDate").setValidators([Validators.required,ValidateStartDate]);
     this.projectDetails
       .get("EndDate")
       .setValue(endDate.toISOString().slice(0, 10));
+      this.projectDetails
+      .get("EndDate").setValidators([Validators.required,ValidateEndDate]);
 
-      let stringTags=this.project.Tags.split(',');
-      for(let i=0;i<stringTags.length;i++){
-        if(stringTags[i]!=''){
-        this.tags.push({name:stringTags[i]})
-        }
+    let stringTags = this.project.Tags.split(",");
+    for (let i = 0; i < stringTags.length; i++) {
+      if (stringTags[i] != "") {
+        this.tags.push({ name: stringTags[i] });
       }
-    
+    }
 
     this.projectAccountService.initMaaping().subscribe(resp => {
       this.projectAccountService.PROJECT_ACCOUNT_DATA = resp.body;
@@ -117,36 +124,36 @@ export class ProjectProfileComponent implements OnInit {
       "AccountName",
       "StartDate",
       "EndDate",
-      "client",
+      "client"
       // "edit"
     ];
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  linkContact(accountId:number) {
-    let dialogRef=this.dialog.open(CreateProjectClientMapComponent, {
-      width: '600px',
-      data: {ProjectId:this.project.ProjectId,AccountId:accountId}
+  linkContact(accountId: number) {
+    let dialogRef = this.dialog.open(CreateProjectClientMapComponent, {
+      width: "600px",
+      data: { ProjectId: this.project.ProjectId, AccountId: accountId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log("The dialog was closed");
     });
   }
 
   linkAccount() {
-    let dialogRef=this.dialog.open(CerateProjectAccountMapComponent, {
-      width: '600px',
-      data: {ProjectId:this.project.ProjectId,isEdit:'false'}
+    let dialogRef = this.dialog.open(CerateProjectAccountMapComponent, {
+      width: "600px",
+      data: { ProjectId: this.project.ProjectId, isEdit: "false" }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log("The dialog was closed");
       this.projectAccountService.initMaaping().subscribe(resp => {
         this.projectAccountService.PROJECT_ACCOUNT_DATA = resp.body;
         let tempdata = this.projectAccountService.PROJECT_ACCOUNT_DATA;
-        this.filteredData=new Array<ProjectAccountMap>();
+        this.filteredData = new Array<ProjectAccountMap>();
         tempdata.forEach(data => {
           if (data.ProjectId == this.project.ProjectId) {
             this.filteredData.push(data);
@@ -194,19 +201,34 @@ export class ProjectProfileComponent implements OnInit {
     }
   }
 
-  onSubmit(){
-    this.projectDetailsService.updateProject(this.projectDetails.value).subscribe((resp)=>{
-      console.log(resp);
-    },(error)=>{
-      console.log(error);
-      if(error.statusText=='Created'){
-        this.snackBar.open('Project updated successfully...', 'Ok', {
-          duration: 3000
-        });
-        this.router.navigate(['/project-details/project-profile/',this.project.ProjectId]);
-      }
-    });
+  onSubmit() {
+    this.projectDetailsService
+      .updateProject(this.projectDetails.value)
+      .subscribe(
+        resp => {
+          console.log(resp);
+        },
+        error => {
+          console.log(error);
+          if (error.statusText == "Created") {
+            this.snackBar.open("Project updated successfully...", "Ok", {
+              duration: 3000
+            });
+            this.router.navigate([
+              "/project-details/project-profile/",
+              this.project.ProjectId
+            ]);
+          }
+        }
+      );
   }
+  getErrorMessageEndDate(){
+    console.log(this.projectDetails.get('EndDate'));
+    return this.projectDetails.get('EndDate').hasError('required') ? 'You must enter a value' :
+    this.projectDetails.get('EndDate').hasError('invalidEndDate') ? 'End date must be greater htan start date' :
+        '';
+  }
+  
 }
 export interface Tag {
   name: string;

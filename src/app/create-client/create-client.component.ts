@@ -45,10 +45,10 @@ export class CreateClientComponent implements OnInit {
         Id:[0],
         ClientName: ["", [Validators.required]],
         UserId: [1],
-        ClientEmail: ["",Validators.required],
+        ClientEmail: ["",[Validators.required,Validators.email]],
         AllowMonitoring:[true,[Validators.required]],
         Designation:["",[Validators.required]],
-        Influence:[0,[Validators.required]],
+        Influence:["",[Validators.required]],
         AccountId:[this.accountDetailsService.getAccountId(),[Validators.required]],
         IsActive:[true]
       });
@@ -59,7 +59,7 @@ export class CreateClientComponent implements OnInit {
         Id:[clientId],
         ClientName: [client.ClientName, [Validators.required]],
         UserId: [client.UserId],
-        ClientEmail: [client.ClientEmail,Validators.required],
+        ClientEmail: [client.ClientEmail,[Validators.required,,Validators.email]],
         AllowMonitoring:[true,[Validators.required]],
         Designation:[client.Designation,[Validators.required]],
         Influence:[client.Influence,[Validators.required]],
@@ -99,5 +99,9 @@ export class CreateClientComponent implements OnInit {
     }
  
   }
-
+  getErrorMessage(formControlName){
+    return this.clientDetails.get(formControlName).hasError('required') ? 'You must enter a value' :
+    this.clientDetails.get(formControlName).hasError('email') ? 'Please enter valid email id' :
+        '';
+  }
 }
