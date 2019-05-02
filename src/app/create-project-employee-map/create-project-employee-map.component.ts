@@ -14,6 +14,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import { ProjectEmployeeService } from "../services/project-employee/project-employee.service";
 import { EmployeeDetails } from "../models/EmployeeDetails";
 import { ProjectEmployeeMap } from "../models/ProjectEmployeeMap";
+import { ValidateStartDate, ValidateEndDate, validateDate } from "../validators/custom-validator";
 @Component({
   selector: "app-create-project-employee-map",
   templateUrl: "./create-project-employee-map.component.html",
@@ -67,19 +68,42 @@ export class CreateProjectEmployeeMapComponent implements OnInit {
         ManagerId: [this.record.ManagerId, [Validators.required]],
         IsActive: [this.record.IsActive]
       });
+      let startDate=new Date(this.record.StartDate);
+      let endDate=new Date(this.record.EndDate);
+
+      this.projectEmployeeDetails.get('StartDate').setValue(startDate.toISOString().slice(0,10));
+      this.projectEmployeeDetails.get('EndDate').setValue(endDate.toISOString().slice(0,10));
+      this.projectEmployeeDetails.get('EndDate').setValidators([Validators.required,ValidateEndDate]);
+
     } else {
       let employeeId = this.data["EmployeeId"];
       this.projectEmployeeDetails = this.fb.group({
         Id: [0],
         UserId: [1],
         StartDate: ["", Validators.required],
-        EndDate: ["", [Validators.required]],
-        ProjectId: [0, [Validators.required]],
+        EndDate: ["", [Validators.required,ValidateEndDate]],
+        ProjectId: ["", [Validators.required]],
         EmployeeId: [employeeId, [Validators.required]],
-        ManagerId: [0, [Validators.required]],
+        ManagerId: ["", [Validators.required]],
         IsActive: [true]
       });
     }
+    this.onChanges();
+
+  }
+  onChanges(): void {
+  
+
+    this.projectEmployeeDetails.get("StartDate").valueChanges.subscribe(val => {
+      console.log(val);
+      if(this.projectEmployeeDetails.get("EndDate").value!=''){
+      if(!validateDate(val,this.projectEmployeeDetails.get("EndDate").value)){
+        this.projectEmployeeDetails.get('EndDate').setErrors({invalidEndDate:true});
+      }else{
+        this.projectEmployeeDetails.get('EndDate').setErrors(null);
+      }
+      }
+    });
   }
   onSubmit() {
     console.log(this.projectEmployeeDetails.value);
@@ -121,6 +145,17 @@ export class CreateProjectEmployeeMapComponent implements OnInit {
           }
         );
     }
+  }
+  getErrorMessageEndDate(){
+    console.log(this.projectEmployeeDetails.get('EndDate'));
+    return this.projectEmployeeDetails.get('EndDate').hasError('required') ? 'You must enter a value' :
+    this.projectEmployeeDetails.get('EndDate').hasError('invalidEndDate') ? 'End date must be greater htan start date' :
+        '';
+  }
+  getErrorMessage(formControlName){
+    return this.projectEmployeeDetails.get(formControlName).hasError('required') ? 'You must enter a value' :
+    this.projectEmployeeDetails.get(formControlName).hasError('email') ? 'Please enter valid email id' :
+        '';
   }
   closeDialog() {
     this.dialogRef.close();

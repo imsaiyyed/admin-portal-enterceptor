@@ -54,4 +54,7 @@ export class ChangeChannelCredsComponent implements OnInit {
       }
     });
   }
+  closeDialog(){
+    this.dialogRef.close();
+  }
 }

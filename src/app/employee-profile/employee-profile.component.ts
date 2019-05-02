@@ -22,7 +22,7 @@ import { CreateProjectEmployeeMapComponent } from "../create-project-employee-ma
 })
 export class EmployeeProfileComponent implements OnInit {
   employee: EmployeeDetails;
-  employeeDetails;
+  employeeDetails= this.fb.group({});
   isEdit = false;
   emplyees: EmployeeDetails[];
   filteredData = new Array<ProjectEmployeeMap>();
@@ -52,7 +52,7 @@ export class EmployeeProfileComponent implements OnInit {
         FirstName: ["", [Validators.required]],
         LastName: ["", [Validators.required]],
         UserId: [1],
-        Email: ["", Validators.required],
+        Email: ["", [Validators.required,Validators.email]],
         AllowMonitoring: [true, [Validators.required]],
         Designation: ["", [Validators.required]],
         IsActive: [true]
@@ -65,7 +65,7 @@ export class EmployeeProfileComponent implements OnInit {
         FirstName: [this.employee.FirstName, [Validators.required]],
         LastName: [this.employee.LastName, [Validators.required]],
         UserId: [1],
-        Email: [this.employee.Email, Validators.required],
+        Email: [this.employee.Email, [Validators.required,Validators.email]],
         AllowMonitoring: [this.employee.AllowMonitoring, [Validators.required]],
         Designation: [this.employee.Designation, [Validators.required]],
         IsActive: [this.employee.IsActive]
@@ -192,5 +192,10 @@ export class EmployeeProfileComponent implements OnInit {
           }
         );
     }
+  }
+  getErrorMessage(formControlName){
+    return this.employeeDetails.get(formControlName).hasError('required') ? 'You must enter a value' :
+    this.employeeDetails.get(formControlName).hasError('email') ? 'Please enter valid email id' :
+        '';
   }
 }

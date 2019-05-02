@@ -19,6 +19,7 @@ export class ChangeChannelConfigComponent implements OnInit {
   channelConfigurations = new Array<ChannelConfiguration>();
   channel: Channel;
   newKey: String = "";
+  emptyKey:boolean=false;
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -65,9 +66,12 @@ export class ChangeChannelConfigComponent implements OnInit {
       );
     });
             }
+            this.emptyKey=false;
             console.log(error);
           }
         );
+    }else{
+      this.emptyKey=true;
     }
   }
   deleteKey(key:ChannelConfiguration){
