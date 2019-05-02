@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { AccountDetailsService } from "../account-service/account-details.service";
-import { ProjectDetailsService } from "../project-service/project-details.service";
 import { ProjectClientMap } from '../../models/ProjectClientMap';
+import { environment } from './../../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +13,7 @@ export class ProjectClientService {
   constructor(private http: HttpClient) {}
   
   initMapping():Observable<HttpResponse<ProjectClientMap[]>>{ 
-    return this.http.get<ProjectClientMap[]>('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ProjectClientMap?UserId=1', { observe: 'response' });
+    return this.http.get<ProjectClientMap[]>(environment.apiEndPoint+'api/enterceptorapi/ProjectClientMap?UserId=1', { observe: 'response' });
   }
 
   
@@ -30,7 +30,7 @@ export class ProjectClientService {
 
   addMapping(record:ProjectClientMap){
     
-    return this.http.post('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ProjectClientMap',{...record});
+    return this.http.post(environment.apiEndPoint+'api/enterceptorapi/ProjectClientMap',{...record});
 }
 
 updateMapping(record:ProjectClientMap){
@@ -43,7 +43,7 @@ updateMapping(record:ProjectClientMap){
   if(record['Renewable']){
     renewable=1;
   }
-  return this.http.put('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ProjectClientMap',{...record,Renewable:renewable,IsActive:isActive});
+  return this.http.put(environment.apiEndPoint+'api/enterceptorapi/ProjectClientMap',{...record,Renewable:renewable,IsActive:isActive});
 }
 
 deleteMapping(record:ProjectClientMap){
@@ -51,7 +51,7 @@ deleteMapping(record:ProjectClientMap){
   const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: {Id:record['Id']}
 };
-  this.http.delete('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ProjectClientMap',httpOptions).subscribe((resp)=>{
+  this.http.delete(environment.apiEndPoint+'api/enterceptorapi/ProjectClientMap',httpOptions).subscribe((resp)=>{
     console.log(resp)
   });
   let index=this.PROJECT_CLIENT_DATA.indexOf(record);

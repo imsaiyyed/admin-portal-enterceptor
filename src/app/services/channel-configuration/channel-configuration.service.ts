@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AccountDetails} from '../../models/AccountDetails';
 import { Observable } from 'rxjs';
 import { HttpResponse, HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from './../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,11 @@ public CHANNEL_CREDENTIAL_DATA:ChannelCredential[];
 
 
   initChannels():Observable<HttpResponse<Channel[]>>{
-   return this.http.get<Channel[]>('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/Channels', { observe: 'response' })
+   return this.http.get<Channel[]>(environment.apiEndPoint+'api/enterceptorapi/Channels', { observe: 'response' })
   //  .subscribe((resp)=>{
   //    this.CHANNEL_DATA=resp;
   //    this.CHANNEL_DATA.forEach((channel,index)=>{
-  //     this.http.get<ChannelConfiguration[]>('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ChannelConfiguration?ChannelId='+channel.Id).subscribe((resp)=>{
+  //     this.http.get<ChannelConfiguration[]>(environment.apiEndPoint+'api/enterceptorapi/ChannelConfiguration?ChannelId='+channel.Id).subscribe((resp)=>{
   //     this.CHANNEL_CONFIGURATION_DATA[index]=new Array<ChannelConfiguration[]>();
   //     this.CHANNEL_CONFIGURATION_DATA[index].push(resp);
   //       console.log(this.CHANNEL_CONFIGURATION_DATA);
@@ -30,16 +31,16 @@ public CHANNEL_CREDENTIAL_DATA:ChannelCredential[];
    
   }
   initChannelConfigurations():Observable<HttpResponse<ChannelConfiguration[]>>{
-     return this.http.get<ChannelConfiguration[]>('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ChannelConfigurationList', { observe: 'response' });
+     return this.http.get<ChannelConfiguration[]>(environment.apiEndPoint+'api/enterceptorapi/ChannelConfigurationList', { observe: 'response' });
   }
   initChannelCredentials():Observable<HttpResponse<ChannelCredential[]>>{
-    return this.http.get<ChannelCredential[]>('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ChannelCredentialList?UserId=1', { observe: 'response' });
+    return this.http.get<ChannelCredential[]>(environment.apiEndPoint+'api/enterceptorapi/ChannelCredentialList?UserId=1', { observe: 'response' });
   }
   addNewKey(channelId:number,newKey:String){
-    return this.http.post('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ChannelConfiguration',{ChannelId:channelId,Key:newKey});
+    return this.http.post(environment.apiEndPoint+'api/enterceptorapi/ChannelConfiguration',{ChannelId:channelId,Key:newKey});
   }
   saveKeyValue(creds:ChannelCredential,newKeyValue:String){
-    return this.http.put('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ChannelCredentials',{Id:creds.Id,ChannelId:creds.ChannelId,UserId:creds.UserId,KeyId:creds.KeyId,Value:newKeyValue}).subscribe((resp)=>{
+    return this.http.put(environment.apiEndPoint+'api/enterceptorapi/ChannelCredentials',{Id:creds.Id,ChannelId:creds.ChannelId,UserId:creds.UserId,KeyId:creds.KeyId,Value:newKeyValue}).subscribe((resp)=>{
       console.log(resp);
     });
   }
@@ -47,7 +48,7 @@ public CHANNEL_CREDENTIAL_DATA:ChannelCredential[];
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: {Id:key.Id}
   };
-    return this.http.delete('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ChannelConfiguration?Id='+key.Id,httpOptions);
+    return this.http.delete(environment.apiEndPoint+'api/enterceptorapi/ChannelConfiguration?Id='+key.Id,httpOptions);
     // .subscribe((resp)=>{
     //   console.log(resp)
     // });
@@ -66,7 +67,7 @@ public CHANNEL_CREDENTIAL_DATA:ChannelCredential[];
   // }
   
   // addAccount(account:AccountDetails){
-  //     return this.http.post('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/account',{AccountName:account['AccountName'],UserId:account['UserId']});
+  //     return this.http.post(environment.apiEndPoint+'api/enterceptorapi/account',{AccountName:account['AccountName'],UserId:account['UserId']});
   // }
 
   // updateAccount(account:AccountDetails){
@@ -75,7 +76,7 @@ public CHANNEL_CREDENTIAL_DATA:ChannelCredential[];
   //   if(account['IsActive']){
   //     isActive=1;
   //   }
-  //   return this.http.put('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/account',{AccountName:account['AccountName'],AccountId:account['AccountId'],IsActive:isActive});
+  //   return this.http.put(environment.apiEndPoint+'api/enterceptorapi/account',{AccountName:account['AccountName'],AccountId:account['AccountId'],IsActive:isActive});
   // }
 
   // deleteAccount(account:AccountDetails){
@@ -83,7 +84,7 @@ public CHANNEL_CREDENTIAL_DATA:ChannelCredential[];
   //   const httpOptions = {
   //     headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: {AccountId:account['AccountId']}
   // };
-  //   this.http.delete('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/account',httpOptions).subscribe((resp)=>{
+  //   this.http.delete(environment.apiEndPoint+'api/enterceptorapi/account',httpOptions).subscribe((resp)=>{
   //     console.log(resp)
   //   });
   //   let index=this.ACCOUNT_DATA.indexOf(account);

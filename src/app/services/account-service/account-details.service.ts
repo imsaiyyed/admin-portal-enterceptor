@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AccountDetails} from '../../models/AccountDetails';
 import { Observable } from 'rxjs';
 import { HttpResponse, HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from './../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,8 @@ export class AccountDetailsService {
   constructor(private http: HttpClient) { }
 
   initAccounts():Observable<HttpResponse<AccountDetails[]>>{
-    console.log('initAccounts');
     let data:AccountDetails[];
-    return this.http.get<AccountDetails[]>('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/accounts?UserId=1', { observe: 'response' })
+    return this.http.get<AccountDetails[]>(environment.apiEndPoint+'api/enterceptorapi/accounts?UserId=1', { observe: 'response' })
   }
   getAccount(accountId: number): AccountDetails {
     let account:AccountDetails=null;
@@ -29,7 +29,7 @@ export class AccountDetailsService {
   }
   
   addAccount(account:AccountDetails){
-      return this.http.post('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/account',{AccountName:account['AccountName'],UserId:account['UserId']});
+      return this.http.post(environment.apiEndPoint+'api/enterceptorapi/account',{AccountName:account['AccountName'],UserId:account['UserId']});
   }
 
   updateAccount(account:AccountDetails){
@@ -38,7 +38,7 @@ export class AccountDetailsService {
     if(account['IsActive']){
       isActive=1;
     }
-    return this.http.put('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/account',{AccountName:account['AccountName'],AccountId:account['AccountId'],IsActive:isActive});
+    return this.http.put(environment.apiEndPoint+'api/enterceptorapi/account',{AccountName:account['AccountName'],AccountId:account['AccountId'],IsActive:isActive});
   }
 
   deleteAccount(account:AccountDetails){
@@ -46,7 +46,7 @@ export class AccountDetailsService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: {AccountId:account['AccountId']}
   };
-    this.http.delete('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/account',httpOptions).subscribe((resp)=>{
+    this.http.delete(environment.apiEndPoint+'api/enterceptorapi/account',httpOptions).subscribe((resp)=>{
       console.log(resp)
     });
     let index=this.ACCOUNT_DATA.indexOf(account);

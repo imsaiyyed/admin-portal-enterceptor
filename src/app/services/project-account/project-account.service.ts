@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpResponse, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { ProjectAccountMap } from "../../models/ProjectAccountMap";
+import { environment } from './../../../environments/environment';
 
 @Injectable({
   providedIn: "root"
@@ -12,7 +13,7 @@ export class ProjectAccountService {
   constructor(private http: HttpClient) {}
   
   initMaaping():Observable<HttpResponse<ProjectAccountMap[]>>{ 
-    return this.http.get<ProjectAccountMap[]>('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ProjectAccountMap?UserId=1', { observe: 'response' });
+    return this.http.get<ProjectAccountMap[]>(environment.apiEndPoint+'api/enterceptorapi/ProjectAccountMap?UserId=1', { observe: 'response' });
   }
 
   
@@ -32,7 +33,7 @@ export class ProjectAccountService {
     if(record['Renewable']){
       renewable=1;
     }
-    return this.http.post('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ProjectAccountMap',{...record,Renewable:renewable});
+    return this.http.post(environment.apiEndPoint+'api/enterceptorapi/ProjectAccountMap',{...record,Renewable:renewable});
 }
 
 updateMapping(record:ProjectAccountMap){
@@ -45,7 +46,7 @@ updateMapping(record:ProjectAccountMap){
   if(record['Renewable']){
     renewable=1;
   }
-  return this.http.put('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ProjectAccountMap',{...record,Renewable:renewable,IsActive:isActive});
+  return this.http.put(environment.apiEndPoint+'api/enterceptorapi/ProjectAccountMap',{...record,Renewable:renewable,IsActive:isActive});
 }
 
 deleteMapping(record:ProjectAccountMap){
@@ -53,7 +54,7 @@ deleteMapping(record:ProjectAccountMap){
   const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: {Id:record['Id']}
 };
-  this.http.delete('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/ProjectAccountMap',httpOptions).subscribe((resp)=>{
+  this.http.delete(environment.apiEndPoint+'api/enterceptorapi/ProjectAccountMap',httpOptions).subscribe((resp)=>{
     console.log(resp)
   });
   let index=this.PROJECT_ACCOUNT_DATA.indexOf(record);

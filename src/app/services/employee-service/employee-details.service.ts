@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { EmployeeDetails } from '../../models/EmployeeDetails';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from './../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class EmployeeDetailsService {
     //https://einterceptorapi.azurewebsites.net/api/enterceptorapi/clients?UserId=1
     
     let data:EmployeeDetails[];
-    return this.http.get<EmployeeDetails[]>('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/Employees?UserId=1', { observe: 'response' });
+    return this.http.get<EmployeeDetails[]>(environment.apiEndPoint+'api/enterceptorapi/Employees?UserId=1', { observe: 'response' });
   }
 
   getClient(clientId:number):EmployeeDetails{
@@ -34,7 +35,7 @@ export class EmployeeDetailsService {
     if(emplyee['AllowMonitoring']){
       allowMonitoring=1;
     }
-    return this.http.post('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/Employees',{...emplyee,AllowMonitoring:allowMonitoring});
+    return this.http.post(environment.apiEndPoint+'api/enterceptorapi/Employees',{...emplyee,AllowMonitoring:allowMonitoring});
 }
 
 updateEmployee(employee:EmployeeDetails){
@@ -47,7 +48,7 @@ updateEmployee(employee:EmployeeDetails){
   if(employee['AllowMonitoring']){
     allowMonitoring=1;
   }
-  return this.http.put('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/Employees',{...employee,AllowMonitoring:allowMonitoring,IsActive:isActive});
+  return this.http.put(environment.apiEndPoint+'api/enterceptorapi/Employees',{...employee,AllowMonitoring:allowMonitoring,IsActive:isActive});
 }
 
 deleteEmployee(employee:EmployeeDetails){
@@ -55,7 +56,7 @@ deleteEmployee(employee:EmployeeDetails){
   const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: {Id:employee['Id']}
 };
-  this.http.delete('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/Employees',httpOptions).subscribe((resp)=>{
+  this.http.delete(environment.apiEndPoint+'api/enterceptorapi/Employees',httpOptions).subscribe((resp)=>{
     console.log(resp)
   });
   let index=this.EMPLOYEE_DATA.indexOf(employee);

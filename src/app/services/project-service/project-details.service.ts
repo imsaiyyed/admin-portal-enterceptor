@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ProjectDetails } from '../../models/ProjectDetails';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
+import { environment } from './../../../environments/environment';
 
 import { Observable } from 'rxjs';
 @Injectable({
@@ -12,7 +13,7 @@ export class ProjectDetailsService {
   constructor(private http: HttpClient) { }
   initProjects():Observable<HttpResponse<ProjectDetails[]>>{
     let data:ProjectDetails[];
-    return this.http.get<ProjectDetails[]>('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/Projects?UserId=1', { observe: 'response' })
+    return this.http.get<ProjectDetails[]>(environment.apiEndPoint+'api/enterceptorapi/Projects?UserId=1', { observe: 'response' })
   }
 
   getProject(projectId: number): ProjectDetails {
@@ -28,7 +29,7 @@ export class ProjectDetailsService {
   
   addProject(project:ProjectDetails){
     // console.log(project.StartDate.toLocaleDateString())
-    return this.http.post('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/projects',{...project});
+    return this.http.post(environment.apiEndPoint+'api/enterceptorapi/projects',{...project});
   }
   
 updateProject(project:ProjectDetails){
@@ -37,14 +38,14 @@ updateProject(project:ProjectDetails){
   if(project['IsActive']){
     isActive=1;
   }
-  return this.http.put('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/projects',{...project,IsActive:isActive});
+  return this.http.put(environment.apiEndPoint+'api/enterceptorapi/projects',{...project,IsActive:isActive});
 }
 deleteProject(project:ProjectDetails){
   console.log('Delete',project)
   const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: {ProjectId:project['ProjectId']}
 };
-  this.http.delete('https://einterceptorapi.azurewebsites.net/api/enterceptorapi/projects',httpOptions).subscribe((resp)=>{
+  this.http.delete(environment.apiEndPoint+'api/enterceptorapi/projects',httpOptions).subscribe((resp)=>{
     console.log(resp)
   });
   let index=this.PROJECT_DATA.indexOf(project);
