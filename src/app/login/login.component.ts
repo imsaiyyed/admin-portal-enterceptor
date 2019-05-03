@@ -6,10 +6,10 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  invalidCreds=false;
   constructor(private fb: FormBuilder,private loginService :LoginService,private router: Router) { }
   user = this.fb.group({
     userName:["",[Validators.required]],
@@ -20,11 +20,18 @@ export class LoginComponent implements OnInit {
   }
   onSubmit()
   {
-      console.log("Usename ",this.user.get('userName').value)
-      console.log("Usename ",this.user.get('userPassword').value)
-      if(this.loginService.login()){
-        this.router.navigate(['/dashboard']);
-      }
+    this.loginService.login(this.user.value).subscribe((response)=>{
+     localStorage.setItem("userAuthToken",response['token']);
+     this.invalidCreds=false;
+     this.router.navigate(['/dashboard']);
+      },(error)=>{
+        this.invalidCreds=true;
+    });
+      // console.log("Usename ",this.user.get('userName').value)
+      // console.log("Usename ",this.user.get('userPassword').value)
+      // if(this.loginService.login()){
+      //   this.router.navigate(['/dashboard']);
+      // }
   }
 
 }

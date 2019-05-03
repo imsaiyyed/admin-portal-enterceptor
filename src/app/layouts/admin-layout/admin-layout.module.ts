@@ -57,6 +57,8 @@ import { ChannelConfigurationComponent } from '../../channel-configuration/chann
 import { ChannelCredentialsComponent } from '../../channel-credentials/channel-credentials.component';
 import { ChangeChannelConfigComponent } from '../../change-channel-config/change-channel-config.component';
 import { ChangeChannelCredsComponent } from '../../change-channel-creds/change-channel-creds.component';
+import { TokenInterceptorService } from '../../services/auth-service/token-interceptor.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: 'red',
@@ -122,6 +124,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ChangeChannelCredsComponent
   ],
   providers:[
+
+
+   
+    
   ],
   exports: [
     

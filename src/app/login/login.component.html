@@ -1,40 +1,48 @@
 <div class="main-content">
-  <div class="container-fluid">
-      <div class="row">
-          <div class="col-md-5">
-              <div class="card">
-                  <div class="card-header card-header-danger">
-                      <h4 class="card-title">Login</h4>
-                      <!-- <p class="card-category">Complete your profile</p> -->
-                  </div>
-                  <div class="card-body">
-                      
-                          <form [formGroup]="user" (ngSubmit)="onSubmit()">
-                          <div class="row">
-                              <div class="col-md-4">
-                                <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="User Name" formControlName="userName">
-                                  </mat-form-field>
-                              </div>
-                              
-                              
-                          </div>
-                          <div class="row">
-                              <div class="col-md-4">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Password" formControlName="userPassword">
-                                </mat-form-field>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Login</h4>
+                        <!-- <p class="card-category">Complete your profile</p> -->
+                    </div>
+                    <div class="card-body">
+
+                        <form [formGroup]="user">
+
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="User Name" formControlName="userName">
+                                    </mat-form-field>
+                                </div>
+
+
                             </div>
-                              
-                          </div>
-                          
-                          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Sign In</button>
-                          <div class="clearfix"></div>
-                      </form>
-                  </div>
-              </div>
-          </div>
-          
-      </div>
-  </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Password" formControlName="userPassword">
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+                            <div class="row" *ngIf="invalidCreds">
+                                <div class="col-md-10">
+                                    <label>Login failed, invalid username or password.</label>
+                                </div>
+                            </div>
+                            <button [disabled]="!user.valid" mat-raised-button (click)="onSubmit()" type="submit"
+                                class="btn btn-danger pull-right">Sign In</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+
+        </div>
+    </div>
 </div>

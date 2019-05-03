@@ -4,7 +4,7 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
@@ -65,6 +65,7 @@ import { ChannelConfigurationComponent } from './channel-configuration/channel-c
 import { ChannelCredentialsComponent } from './channel-credentials/channel-credentials.component';
 import { ChangeChannelConfigComponent } from './change-channel-config/change-channel-config.component';
 import { ChangeChannelCredsComponent } from './change-channel-creds/change-channel-creds.component';
+import { TokenInterceptorService } from './services/auth-service/token-interceptor.service';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -121,7 +122,8 @@ import { ChangeChannelCredsComponent } from './change-channel-creds/change-chann
     // CompanyDetailsComponent,
 
   ],
-  providers: [],
+  providers: [    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
