@@ -1,21 +1,21 @@
 <div class="main-content">
   <div class="container-fluid">
-      <div class="row">
+      <div class="row" *ngIf="categoryData">
           <div class="col-lg-3 col-md-6 col-sm-6">
               <div class="card card-stats">
                   <div class="card-header card-header-warning card-header-icon">
                       <div class="card-icon">
                           <i class="material-icons">content_copy</i>
                       </div>
-                      <p class="card-category">Used Space</p>
-                      <h3 class="card-title">49/50
-                          <small>GB</small>
+                      <p class="card-category">Query</p>
+                      <h3 class="card-title">{{categoryData[3].Count+"/"+totalCount}}
+                          <!-- <small>E-Mails</small> -->
                       </h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
                           <i class="material-icons text-danger">warning</i>
-                          <a href="#pablo">Get More Space...</a>
+                          <a href="#pablo">Resolve Queries  ...</a>
                       </div>
                   </div>
               </div>
@@ -26,8 +26,8 @@
                       <div class="card-icon">
                           <i class="material-icons">store</i>
                       </div>
-                      <p class="card-category">Revenue</p>
-                      <h3 class="card-title">$34,245</h3>
+                      <p class="card-category">Appreciation</p>
+                      <h3 class="card-title">{{categoryData[0].Count+"/"+totalCount}}</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
@@ -42,8 +42,8 @@
                       <div class="card-icon">
                           <i class="material-icons">info_outline</i>
                       </div>
-                      <p class="card-category">Fixed Issues</p>
-                      <h3 class="card-title">75</h3>
+                      <p class="card-category">Complaints</p>
+                      <h3 class="card-title">{{categoryData[1].Count+"/"+totalCount}}</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
@@ -58,8 +58,8 @@
                       <div class="card-icon">
                           <i class="fa fa-twitter"></i>
                       </div>
-                      <p class="card-category">Followers</p>
-                      <h3 class="card-title">+245</h3>
+                      <p class="card-category">Information</p>
+                      <h3 class="card-title">{{categoryData[2].Count+"/"+totalCount}}</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">

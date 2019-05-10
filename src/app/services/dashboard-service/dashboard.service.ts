@@ -14,7 +14,8 @@ export class DashboardService {
   public POSITIVE_DATA:SentimentsChartModel[];
   public NEGATIVE_DATA:SentimentsChartModel[];
   public TRENDS_DATA:TrendsModel[];
-  
+  public CATEGORY_DATA:CategoriesModel[];
+
   constructor(private http: HttpClient) { }
   
   initPositiveData():Observable<HttpResponse<SentimentsChartModel[]>>{
@@ -25,6 +26,9 @@ export class DashboardService {
   }
   initTrendsData():Observable<HttpResponse<TrendsModel[]>>{
     return this.http.get<TrendsModel[]>(environment.apiEndPoint+'api/enterceptorapi/SentimentTrend', { observe: 'response' });
+  }
+  initCategoryData():Observable<HttpResponse<CategoriesModel[]>>{
+    return this.http.get<CategoriesModel[]>(environment.apiEndPoint+'api/enterceptorapi/CategoryCount', { observe: 'response' });
   }
   // http://localhost:5000/api/enterceptorapi/SentimentTrend
 //   getClient(clientId:number):ClientDetails{
@@ -82,7 +86,11 @@ export class SentimentsChartModel{
 }
 
 export class TrendsModel{
-  // Week:number;
   Month:number;
   AverageSentiment:number;
+}
+
+export class CategoriesModel{
+  Categorization:String;
+  Count:number;
 }

@@ -3,7 +3,8 @@ import * as Chartist from "chartist";
 import {
   DashboardService,
   SentimentsChartModel,
-  TrendsModel
+  TrendsModel,
+  CategoriesModel
 } from "../services/dashboard-service/dashboard.service";
 
 @Component({
@@ -15,7 +16,8 @@ export class DashboardComponent implements OnInit {
   positiveData: SentimentsChartModel[];
   negativeData: SentimentsChartModel[];
   trendData: TrendsModel[];
-
+  categoryData=new Array<CategoriesModel>();
+  totalCount=0;
   constructor(private dashborardService: DashboardService) {}
   startAnimationForLineChart(chart) {
     let seq: any, delays: any, durations: any;
@@ -78,25 +80,37 @@ export class DashboardComponent implements OnInit {
     seq2 = 0;
   }
   ngOnInit() {
+    this.dashborardService.initCategoryData().subscribe(
+      response => {
+        this.dashborardService.CATEGORY_DATA = response.body;
+        this.categoryData = this.dashborardService.CATEGORY_DATA;
+        console.log(this.categoryData)
+        this.categoryData.forEach(record=>{
+          this.totalCount=this.totalCount+record.Count;
+        })
+      },
+      error => {}
+    );
     this.dashborardService.initPositiveData().subscribe(
       response => {
         this.dashborardService.POSITIVE_DATA = response.body;
         this.dashborardService.initNegativeData().subscribe(
           resp => {
             this.dashborardService.NEGATIVE_DATA = resp.body;
-            this.dashborardService.initTrendsData().subscribe((res)=>{
-              this.dashborardService.TRENDS_DATA=res.body;
+            this.dashborardService.initTrendsData().subscribe(
+              res => {
+                this.dashborardService.TRENDS_DATA = res.body;
 
-              this.positiveData = this.dashborardService.POSITIVE_DATA;
-              this.negativeData = this.dashborardService.NEGATIVE_DATA;
-              this.trendData=this.dashborardService.TRENDS_DATA;
+                this.positiveData = this.dashborardService.POSITIVE_DATA;
+                this.negativeData = this.dashborardService.NEGATIVE_DATA;
+                this.trendData = this.dashborardService.TRENDS_DATA;
 
-              this.drawPositiveSentiments();
-              this.drawNegativeSentiments();
-              this.drawSentimentTrend();
-            },(er)=>{})
-
-            
+                this.drawPositiveSentiments();
+                this.drawNegativeSentiments();
+                this.drawSentimentTrend();
+              },
+              er => {}
+            );
           },
           err => {}
         );
@@ -104,103 +118,102 @@ export class DashboardComponent implements OnInit {
       error => {}
     );
 
-
     /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
-    const dataDailySalesChart: any = {
-      labels: ["M", "T", "W", "T", "F", "S", "S"],
-      series: [[12, 17, 7, 17, 23, 18, 38]]
-    };
+    // const dataDailySalesChart: any = {
+    //   labels: ["M", "T", "W", "T", "F", "S", "S"],
+    //   series: [[12, 17, 7, 17, 23, 18, 38]]
+    // };
 
-    const optionsDailySalesChart: any = {
-      lineSmooth: Chartist.Interpolation.cardinal({
-        tension: 0
-      }),
-      low: 0,
-      high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-      chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
-    };
+    // const optionsDailySalesChart: any = {
+    //   lineSmooth: Chartist.Interpolation.cardinal({
+    //     tension: 0
+    //   }),
+    //   low: 0,
+    //   high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+    //   chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
+    // };
 
-    var dailySalesChart = new Chartist.Line(
-      "#dailySalesChart",
-      dataDailySalesChart,
-      optionsDailySalesChart
-    );
+    // var dailySalesChart = new Chartist.Line(
+    //   "#dailySalesChart",
+    //   dataDailySalesChart,
+    //   optionsDailySalesChart
+    // );
 
-    this.startAnimationForLineChart(dailySalesChart);
+    // this.startAnimationForLineChart(dailySalesChart);
 
-    /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
+    // /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
 
-    const dataCompletedTasksChart: any = {
-      labels: ["12p", "3p", "6p", "9p", "12p", "3a", "6a", "9a"],
-      series: [[230, 750, 450, 300, 280, 240, 200, 190]]
-    };
+    // const dataCompletedTasksChart: any = {
+    //   labels: ["12p", "3p", "6p", "9p", "12p", "3a", "6a", "9a"],
+    //   series: [[230, 750, 450, 300, 280, 240, 200, 190]]
+    // };
 
-    const optionsCompletedTasksChart: any = {
-      lineSmooth: Chartist.Interpolation.cardinal({
-        tension: 0
-      }),
-      low: 0,
-      high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-      chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
-    };
+    // const optionsCompletedTasksChart: any = {
+    //   lineSmooth: Chartist.Interpolation.cardinal({
+    //     tension: 0
+    //   }),
+    //   low: 0,
+    //   high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+    //   chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
+    // };
 
-    var completedTasksChart = new Chartist.Line(
-      "#completedTasksChart",
-      dataCompletedTasksChart,
-      optionsCompletedTasksChart
-    );
+    // var completedTasksChart = new Chartist.Line(
+    //   "#completedTasksChart",
+    //   dataCompletedTasksChart,
+    //   optionsCompletedTasksChart
+    // );
 
-    // start animation for the Completed Tasks Chart - Line Chart
-    this.startAnimationForLineChart(completedTasksChart);
+    // // start animation for the Completed Tasks Chart - Line Chart
+    // this.startAnimationForLineChart(completedTasksChart);
 
-    /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
+    // /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
 
-    var datawebsiteViewsChart = {
-      labels: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
-      series: [[542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]]
-    };
-    var optionswebsiteViewsChart = {
-      axisX: {
-        showGrid: false
-      },
-      low: 0,
-      high: 1000,
-      chartPadding: { top: 0, right: 5, bottom: 0, left: 0 }
-    };
-    var responsiveOptions: any[] = [
-      [
-        "screen and (max-width: 640px)",
-        {
-          seriesBarDistance: 5,
-          axisX: {
-            labelInterpolationFnc: function(value) {
-              return value[0];
-            }
-          }
-        }
-      ]
-    ];
-    var websiteViewsChart = new Chartist.Bar(
-      "#websiteViewsChart",
-      datawebsiteViewsChart,
-      optionswebsiteViewsChart,
-      responsiveOptions
-    );
+    // var datawebsiteViewsChart = {
+    //   labels: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
+    //   series: [[542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]]
+    // };
+    // var optionswebsiteViewsChart = {
+    //   axisX: {
+    //     showGrid: false
+    //   },
+    //   low: 0,
+    //   high: 1000,
+    //   chartPadding: { top: 0, right: 5, bottom: 0, left: 0 }
+    // };
+    // var responsiveOptions: any[] = [
+    //   [
+    //     "screen and (max-width: 640px)",
+    //     {
+    //       seriesBarDistance: 5,
+    //       axisX: {
+    //         labelInterpolationFnc: function(value) {
+    //           return value[0];
+    //         }
+    //       }
+    //     }
+    //   ]
+    // ];
+    // var websiteViewsChart = new Chartist.Bar(
+    //   "#websiteViewsChart",
+    //   datawebsiteViewsChart,
+    //   optionswebsiteViewsChart,
+    //   responsiveOptions
+    // );
 
-    //start animation for the Emails Subscription Chart
-    this.startAnimationForBarChart(websiteViewsChart);
+    // //start animation for the Emails Subscription Chart
+    // this.startAnimationForBarChart(websiteViewsChart);
   }
-  drawPositiveSentiments=()=>{
+  drawPositiveSentiments = () => {
     let labels = new Array();
     let series = new Array();
 
-    let maxPositives=series.sort().pop();
+    let maxPositives = series.sort().pop();
     this.positiveData.forEach(record => {
       labels.push(record.Accountname);
       series.push(record.Value);
     });
-    
+
     // this.positiveData.forEach((record)=>{
     //   labels.push(record.Accountname);
     //   series.push(record.Value);
@@ -239,12 +252,12 @@ export class DashboardComponent implements OnInit {
 
     //start animation for the Emails Subscription Chart
     this.startAnimationForBarChart(websiteViewsChart);
-  }
-  drawNegativeSentiments=()=>{
+  };
+  drawNegativeSentiments = () => {
     let labels = new Array();
     let series = new Array();
 
-    let maxNegatives=series.sort().pop();
+    let maxNegatives = series.sort().pop();
     this.negativeData.forEach(record => {
       labels.push(record.Accountname);
       series.push(record.Value);
@@ -284,20 +297,32 @@ export class DashboardComponent implements OnInit {
 
     //start animation for the Emails Subscription Chart
     this.startAnimationForBarChart(websiteViewsChart);
-  }
-  drawSentimentTrend(){
-    
-     /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
-     let labels = new Array();
-     let series = new Array();
- 
-     let maxSentiment=series.sort().pop();
-     this.trendData.forEach(record => {
-       labels.push(record.Month);
-       series.push(record.AverageSentiment);
-     });
-     const dataSentimentTrend: any = {
-      labels: ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'],
+  };
+  drawSentimentTrend() {
+    /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
+    let labels = new Array();
+    let series = new Array();
+
+    let maxSentiment = series.sort().pop();
+    this.trendData.forEach(record => {
+      labels.push(record.Month);
+      series.push(record.AverageSentiment);
+    });
+    const dataSentimentTrend: any = {
+      labels: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "June",
+        "July",
+        "Aug",
+        "Sept",
+        "Oct",
+        "Nov",
+        "Dec"
+      ],
       series: [series]
     };
 
