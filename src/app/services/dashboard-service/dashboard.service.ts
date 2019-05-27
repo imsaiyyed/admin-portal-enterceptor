@@ -4,6 +4,7 @@ import {ClientDetails} from '../../models/ClientDetails';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from './../../../environments/environment';
+import { TweetDetails } from 'app/models/TweetModel';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,10 @@ export class DashboardService {
   public POSITIVE_DATA:SentimentsChartModel[];
   public NEGATIVE_DATA:SentimentsChartModel[];
   public TRENDS_DATA:TrendsModel[];
+  public TWEET_TRENDS_DATA:TweetTrends[];
+
   public CATEGORY_DATA:CategoriesModel[];
+  public TWEETS_DATA:TweetDetails[];
 
   constructor(private http: HttpClient) { }
   
@@ -27,8 +31,17 @@ export class DashboardService {
   initTrendsData():Observable<HttpResponse<TrendsModel[]>>{
     return this.http.get<TrendsModel[]>(environment.apiEndPoint+'api/enterceptorapi/SentimentTrend', { observe: 'response' });
   }
+  initTweetTrendsData():Observable<HttpResponse<TweetTrends[]>>{
+    return this.http.get<TweetTrends[]>(environment.apiEndPoint+'api/enterceptorapi/TweetSentimentTrend', { observe: 'response' });
+  }
   initCategoryData():Observable<HttpResponse<CategoriesModel[]>>{
     return this.http.get<CategoriesModel[]>(environment.apiEndPoint+'api/enterceptorapi/CategoryCount', { observe: 'response' });
+  }
+  initTweetsData():Observable<HttpResponse<TweetDetails[]>>{
+    return this.http.get<TweetDetails[]>(environment.apiEndPoint+'api/enterceptorapi/tweets', { observe: 'response' });
+  }
+  syncChannelData(){
+    return this.http.get(environment.apiEndPoint+'api/metadata/syncchannels',{observe:'response'});
   }
   // http://localhost:5000/api/enterceptorapi/SentimentTrend
 //   getClient(clientId:number):ClientDetails{
@@ -87,6 +100,10 @@ export class SentimentsChartModel{
 
 export class TrendsModel{
   Month:number;
+  AverageSentiment:number;
+}
+export class TweetTrends{
+  Day:number;
   AverageSentiment:number;
 }
 

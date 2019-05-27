@@ -29,7 +29,7 @@ export class ProjectDetailsComponent implements OnInit {
   ) {}
   ngOnInit() {
     // let PROJECT_DATA;
-    this.ngxService.start();
+    this.ngxService.startBackground();
     this.projectDetails.initProjects().subscribe(resp => {
       // PROJECT_DATA=resp.body;
       this.projectDetails.PROJECT_DATA = resp.body;
@@ -38,7 +38,7 @@ export class ProjectDetailsComponent implements OnInit {
       );
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.ngxService.stop();
+      this.ngxService.stopBackground();
     });
     this.displayedColumns = [
       "ProjectId",

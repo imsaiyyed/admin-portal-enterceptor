@@ -39,7 +39,7 @@ import {
   MatSnackBarModule,
   MatDialogModule,
   MatListModule,
-  
+  MatProgressBarModule,  
 } from '@angular/material';
 import { CreateAccountComponent } from '../../create-account/create-account.component';
 import { ClientDetailsComponent } from '../../client-details/client-details.component';
@@ -63,7 +63,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: 'red',
   bgsSize: 40,
-  fgsType:SPINNER.threeStrings,
+  fgsType:SPINNER.threeStrings,  
 };
 @NgModule({
   imports: [
@@ -91,6 +91,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatSnackBarModule,
     MatDialogModule,
     MatListModule,
+    MatProgressBarModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
   ],
   declarations: [

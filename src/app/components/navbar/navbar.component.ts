@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
+import { DashboardService } from 'app/services/dashboard-service/dashboard.service';
+import { NgxUiLoaderService } from "ngx-ui-loader";
 
 @Component({
   selector: 'app-navbar',
@@ -14,8 +16,9 @@ export class NavbarComponent implements OnInit {
       mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
+    syncComplete=true;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router) {
+    constructor(location: Location,  private element: ElementRef, private router: Router,private dashboardService:DashboardService, private ngxService: NgxUiLoaderService,) {
       this.location = location;
           this.sidebarVisible = false;
     }
@@ -33,7 +36,22 @@ export class NavbarComponent implements OnInit {
          }
      });
     }
+    syncData=()=>{
+        this.syncComplete=false;
+        // this.ngxService.startBackground();
+        // console.log('Sync data')
 
+        this.dashboardService.syncChannelData().subscribe((resp)=>{
+          console.log(resp)
+        },(err)=>{
+            if(err.statusText=="Created"){
+                // this.ngxService.stopBackground();
+                this.syncComplete=true;
+                this.router.navigate(['/'])
+
+              }
+        });
+      }
     sidebarOpen() {
         const toggleButton = this.toggleButton;
         const body = document.getElementsByTagName('body')[0];

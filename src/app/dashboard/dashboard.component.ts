@@ -1,11 +1,15 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import * as Chartist from "chartist";
 import {
   DashboardService,
   SentimentsChartModel,
   TrendsModel,
-  CategoriesModel
+  CategoriesModel,
+  TweetTrends
 } from "../services/dashboard-service/dashboard.service";
+import { SelectionModel } from "@angular/cdk/collections";
+import { TweetDetails } from "app/models/TweetModel";
+import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
 
 @Component({
   selector: "app-dashboard",
@@ -16,16 +20,27 @@ export class DashboardComponent implements OnInit {
   positiveData: SentimentsChartModel[];
   negativeData: SentimentsChartModel[];
   trendData: TrendsModel[];
-  categoryData=new Array<CategoriesModel>();
-  totalCount=0;
-  constructor(private dashborardService: DashboardService) {}
+  tweetTrendData:TweetTrends[];
+  categoryData = new Array<CategoriesModel>();
+  totalCount = 0;
+
+
+
+  displayedColumns: string[] ;
+  dataSource ;
+  selection = new SelectionModel<TweetDetails>(true, []);
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  constructor(private dashborardService: DashboardService) { }
   startAnimationForLineChart(chart) {
     let seq: any, delays: any, durations: any;
     seq = 0;
     delays = 80;
     durations = 500;
 
-    chart.on("draw", function(data) {
+    chart.on("draw", function (data) {
       if (data.type === "line" || data.type === "area") {
         data.element.animate({
           d: {
@@ -62,7 +77,7 @@ export class DashboardComponent implements OnInit {
     seq2 = 0;
     delays2 = 80;
     durations2 = 500;
-    chart.on("draw", function(data) {
+    chart.on("draw", function (data) {
       if (data.type === "bar") {
         seq2++;
         data.element.animate({
@@ -85,11 +100,11 @@ export class DashboardComponent implements OnInit {
         this.dashborardService.CATEGORY_DATA = response.body;
         this.categoryData = this.dashborardService.CATEGORY_DATA;
         console.log(this.categoryData)
-        this.categoryData.forEach(record=>{
-          this.totalCount=this.totalCount+record.Count;
+        this.categoryData.forEach(record => {
+          this.totalCount = this.totalCount + record.Count;
         })
       },
-      error => {}
+      error => { }
     );
     this.dashborardService.initPositiveData().subscribe(
       response => {
@@ -109,100 +124,32 @@ export class DashboardComponent implements OnInit {
                 this.drawNegativeSentiments();
                 this.drawSentimentTrend();
               },
-              er => {}
+              er => { }
             );
           },
-          err => {}
+          err => { }
         );
       },
-      error => {}
+      error => { }
     );
 
-    /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
+    this.dashborardService.initTweetsData().subscribe((resp) => {
+      console.log(resp.body)
+      this.dashborardService.TWEETS_DATA = resp.body;
+      this.dataSource = new MatTableDataSource<TweetDetails>(this.dashborardService.TWEETS_DATA);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }, (err) => { })
 
-    // const dataDailySalesChart: any = {
-    //   labels: ["M", "T", "W", "T", "F", "S", "S"],
-    //   series: [[12, 17, 7, 17, 23, 18, 38]]
-    // };
+    this.dashborardService.initTweetTrendsData().subscribe((resp) => {
+      console.log('HERE.......',resp.body)
+      this.dashborardService.TWEET_TRENDS_DATA=resp.body;
+      this.tweetTrendData=this.dashborardService.TWEET_TRENDS_DATA;
+      this.drawTweterSentimentTrend();
+    },(err)=>{})
 
-    // const optionsDailySalesChart: any = {
-    //   lineSmooth: Chartist.Interpolation.cardinal({
-    //     tension: 0
-    //   }),
-    //   low: 0,
-    //   high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-    //   chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
-    // };
+    this.displayedColumns= ['tweet','retweetcount','classification','sender'];
 
-    // var dailySalesChart = new Chartist.Line(
-    //   "#dailySalesChart",
-    //   dataDailySalesChart,
-    //   optionsDailySalesChart
-    // );
-
-    // this.startAnimationForLineChart(dailySalesChart);
-
-    // /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
-
-    // const dataCompletedTasksChart: any = {
-    //   labels: ["12p", "3p", "6p", "9p", "12p", "3a", "6a", "9a"],
-    //   series: [[230, 750, 450, 300, 280, 240, 200, 190]]
-    // };
-
-    // const optionsCompletedTasksChart: any = {
-    //   lineSmooth: Chartist.Interpolation.cardinal({
-    //     tension: 0
-    //   }),
-    //   low: 0,
-    //   high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-    //   chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
-    // };
-
-    // var completedTasksChart = new Chartist.Line(
-    //   "#completedTasksChart",
-    //   dataCompletedTasksChart,
-    //   optionsCompletedTasksChart
-    // );
-
-    // // start animation for the Completed Tasks Chart - Line Chart
-    // this.startAnimationForLineChart(completedTasksChart);
-
-    // /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
-
-    // var datawebsiteViewsChart = {
-    //   labels: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
-    //   series: [[542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]]
-    // };
-    // var optionswebsiteViewsChart = {
-    //   axisX: {
-    //     showGrid: false
-    //   },
-    //   low: 0,
-    //   high: 1000,
-    //   chartPadding: { top: 0, right: 5, bottom: 0, left: 0 }
-    // };
-    // var responsiveOptions: any[] = [
-    //   [
-    //     "screen and (max-width: 640px)",
-    //     {
-    //       seriesBarDistance: 5,
-    //       axisX: {
-    //         labelInterpolationFnc: function(value) {
-    //           return value[0];
-    //         }
-    //       }
-    //     }
-    //   ]
-    // ];
-    // var websiteViewsChart = new Chartist.Bar(
-    //   "#websiteViewsChart",
-    //   datawebsiteViewsChart,
-    //   optionswebsiteViewsChart,
-    //   responsiveOptions
-    // );
-
-    // //start animation for the Emails Subscription Chart
-    // this.startAnimationForBarChart(websiteViewsChart);
   }
   drawPositiveSentiments = () => {
     let labels = new Array();
@@ -236,7 +183,7 @@ export class DashboardComponent implements OnInit {
         {
           seriesBarDistance: 5,
           axisX: {
-            labelInterpolationFnc: function(value) {
+            labelInterpolationFnc: function (value) {
               return value[0];
             }
           }
@@ -281,7 +228,7 @@ export class DashboardComponent implements OnInit {
         {
           seriesBarDistance: 5,
           axisX: {
-            labelInterpolationFnc: function(value) {
+            labelInterpolationFnc: function (value) {
               return value[0];
             }
           }
@@ -298,6 +245,45 @@ export class DashboardComponent implements OnInit {
     //start animation for the Emails Subscription Chart
     this.startAnimationForBarChart(websiteViewsChart);
   };
+  drawTweterSentimentTrend() {
+    /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
+    let labels = new Array();
+    let series = [];
+    for(let i=0;i<32;i++){
+      series[i]=0;
+    }
+
+    
+
+    let maxSentiment = series.sort().pop();
+    this.tweetTrendData.forEach(record => {
+      labels.push(record.Day);
+      console.log(record.Day)
+      series[record.Day]=record.AverageSentiment;
+    });
+    console.log(series)
+    const dataSentimentTrend: any = {
+      labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+      series: [series]
+    };
+
+    const optionsSentimentTrendChart: any = {
+      lineSmooth: Chartist.Interpolation.cardinal({
+        tension: 0
+      }),
+      low: -1,
+      high: 1, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+      chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
+    };
+
+    var sentimentTrendChart = new Chartist.Line(
+      "#twitterSentimentTrendChart",
+      dataSentimentTrend,
+      optionsSentimentTrendChart
+    );
+
+    this.startAnimationForLineChart(sentimentTrendChart);
+  }
   drawSentimentTrend() {
     /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
     let labels = new Array();

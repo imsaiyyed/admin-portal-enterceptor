@@ -49,6 +49,7 @@ import {
   MatRadioModule,
   MatChipsModule,
   MatCheckboxModule,
+  MatProgressBarModule,
   
 } from '@angular/material';
 import { CreateClientComponent } from './create-client/create-client.component';
@@ -66,6 +67,16 @@ import { ChannelCredentialsComponent } from './channel-credentials/channel-crede
 import { ChangeChannelConfigComponent } from './change-channel-config/change-channel-config.component';
 import { ChangeChannelCredsComponent } from './change-channel-creds/change-channel-creds.component';
 import { TokenInterceptorService } from './services/auth-service/token-interceptor.service';
+import { NgxUiLoaderModule, NgxUiLoaderConfig, POSITION, SPINNER, PB_DIRECTION } from  'ngx-ui-loader';
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  bgsColor: 'red',
+  bgsPosition: POSITION.topCenter,
+  bgsSize: 60,
+  bgsType: SPINNER.threeStrings, // background spinner type
+  fgsType: SPINNER.threeStrings, // foreground spinner type
+  pbDirection: PB_DIRECTION.leftToRight, // progress bar direction
+  pbThickness: 5, // progress bar thickness  
+};
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -91,9 +102,11 @@ import { TokenInterceptorService } from './services/auth-service/token-intercept
   MatChipsModule,
   MatCheckboxModule,
   ReactiveFormsModule,
-  
+  // MatProgressBarModule,
+  NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+
     AgmCoreModule.forRoot({
-      apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
+      apiKey: 'AIzaSyAUWmdrkBtNrDLgtxhnPMbp0F2omklUZuU'
     })
   ],
   declarations: [
